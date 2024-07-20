@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cat66 방명록</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <!-- 방명록 페이지입니다. -->
+    <!-- 구글폰트 -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- sweetalert2 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
+    <style>
+      /*배경색을 회색으로 바꿔줌*/
+      body {
+        background-color: rgb(255, 247, 236);
+
+        background-image: url("https://img.freepik.com/free-vector/set-vector-cute-cartoonish-cats-isolated-white-background_8130-951.jpg?ga=GA1.1.1026332824.1721297031&semt=sph");
+
+        font-family: "Jua", sans-serif;
+        margin: 0;
+      }
+
+      .mytitle {
+        width: 400px;
+        height: 100px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        margin-bottom: 20px;
+
+        color: black;
+
+        border: 7px solid rgb(235, 179, 134);
+        border-radius: 30px;
+
+        background-color: rgb(255, 242, 231);
+        transition: background-color 0.2s ease 0.1s;
+      }
+
+      .mytitle:hover {
+        background-color: rgb(235, 179, 134);
+      }
+
+      .mytitle > div {
+        margin: 10px auto;
+        font-size: 80px;
+        border-radius: 30px;
+        color: rgb(69, 59, 53);
+
+        cursor: pointer;
+        transition: background-color 0.2s ease 0.1s;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .visitBtn {
+        margin: 20px 0 40px;
+        padding: 10px;
+
+        border-radius: 10px;
+        background-color: rgb(253, 218, 190);
+        color: rgb(4, 4, 4);
+
+        cursor: pointer;
+        transition: background-color 0.2s ease 0.1s;
+      }
+
+      .visitBtn:hover {
+        background-color: rgb(235, 179, 134);
+      }
+
+      .floatingbox {
+        border: 5px solid rgb(235, 179, 134);
+        background-color: rgb(255, 242, 231);
+        width: fit-content;
+
+        margin: 100px auto 0px auto;
+        padding: 50px 50px 20px;
+
+        box-shadow: 0px 3px 0px white;
+
+        border-radius: 20px;
+      }
+
+      .name9 {
+        padding-right: 20px;
+        white-space: nowrap;
+      }
+
+      /* 플로팅 안에 있는 박스 색상 : 회색 /  일자로 정렬하게 만들려면 flex 기능을 씀*/
+      .form > input {
+        background-color: rgb(255, 251, 249);
+      }
+
+      .form2 > input {
+        background-color: rgb(255, 251, 249);
+        width: 410px;
+        height: 80px;
+      }
+
+      .formcontainer {
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      /* 안에 있는 박스들도 크기랑 여백 설정*/
+      .form {
+        width: 300px;
+        padding-left: 10px;
+        margin-right: 20px;
+      }
+
+      .form2 {
+        padding-left: 10px;
+        margin-right: 10px;
+      }
+
+      /*반응형으로 만들어서 축소화 시켜도 항상 home이 오른쪽 끝에 보임*/
+      .mybtn {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 20px;
+      }
+
+      /* 폰트 11, 글자가 넘쳐서 한줄로 할려면 nowrap을 써야했음*/
+      .mybtn > button {
+        background-color: rgb(253, 218, 190);
+        width: 80px;
+        height: 40px;
+        font-size: 11px;
+        white-space: nowrap;
+      }
+
+      /*버튼 형태를 가로 100 더 줌*/
+      .mybtn2 > button {
+        background-color: rgb(253, 218, 190);
+        color: rgb(69, 59, 53);
+        width: 100px;
+      }
+
+      .date {
+        font-size: 10px;
+      }
+
+      .allcard {
+        width: 550px;
+
+        margin: 100px auto 150px;
+      }
+
+      .card1 {
+        border-radius: 3px;
+        width: 400px;
+        background-color: white;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        text-align: center;
+      }
+
+      .card2 {
+        width: 1200px;
+        height: 70px;
+        background-color: white;
+        border-radius: 3px;
+
+        display: flex;
+      }
+
+      .flex1 {
+        margin-top: 10px;
+        display: flex;
+      }
+
+      .card-body {
+        background-color: rgb(255, 242, 231);
+        white-space: nowrap;
+
+        border-radius: 10px;
+      }
+    </style>
+
+    <script type="module">
+      // Firebase SDK 라이브러리 가져오기
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        query,
+        orderBy,
+        limit,
+        getDocs,
+        addDoc,
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+      // Firebase 구성 정보 설정
+      const firebaseConfig = {
+        apiKey: "AIzaSyAio8CbaweQ5YCb0-Zx3STpG8gP6sVyp0E",
+        authDomain: "cat66-d3757.firebaseapp.com",
+        projectId: "cat66-d3757",
+        storageBucket: "cat66-d3757.appspot.com",
+        messagingSenderId: "238522357447",
+        appId: "1:238522357447:web:2d3c6a05f1402496da50e2",
+      };
+
+      // Firebase 인스턴스 초기화
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      // JS 작성 구역
+
+      //토스트 팝업
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "center-center",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      // 현재 시간 생성
+      const now = new Date();
+
+      // 등록 버튼을 누르면, 해당 내용을 파이어베이스에 저장하는 기능
+      $("#write_btn").click(async function () {
+        //텍스트 박스에 작성된 내용을 가져오는 코드
+        let name = $(`#name_input_box`).val();
+        let content = $("#content_input_box").val();
+
+        let write_content = {
+          name: name,
+          content: content,
+          time: now,
+        };
+
+        // 정규표현식 : 이름 2~6글자, 내용 2글자 이상
+        const name_regex = /^.{2,6}$/;
+        const content_regex = /^.{2,30}$/;
+        if (!name_regex.test(name)) {
+          return Toast.fire({
+            icon: "error",
+            title: "2~6글자 입력해 주세요!.",
+          });
+        }
+        if (!content_regex.test(content)) {
+          return Toast.fire({
+            icon: "error",
+            title: "2~30글자 입력해 주세요!",
+          });
+        }
+        if (name_regex.test(name) && content_regex.test(content)) {
+          Swal.fire(
+            "방명록이 작성 됐습니다!",
+            "",
+
+            "success"
+          ).then(function () {
+            return window.location.reload();
+          });
+
+          await addDoc(collection(db, "guest_book"), write_content);
+        }
+      });
+
+      // 파이어베이스에서 방명록 작성한 내용 n개를 가져오는 기능.
+      let n = 10;
+      const guest_book = await getDocs(
+        query(collection(db, "guest_book"), orderBy("time", "desc"), limit(n))
+      );
+      guest_book.forEach((doc) => {
+        const data = doc.data();
+
+        // 타임스템프 시간을 사람 눈에 보기 편하게 바꾸는 기능(yy-mm-dd hh:mm:ss)
+        let day = data.time.toDate();
+
+        let year = day.getFullYear();
+        let month = ("0" + (day.getMonth() + 1)).slice(-2);
+        let days = ("0" + day.getDate()).slice(-2);
+        let hours = ("0" + day.getHours()).slice(-2);
+        let minutes = ("0" + day.getMinutes()).slice(-2);
+        let seconds = ("0" + day.getSeconds()).slice(-2);
+
+        let written_time =
+          // year +
+          // "-" +
+          month + "-" + days + " " + hours + ":" + minutes + ":" + seconds;
+
+        // 방명록 댓글 html
+        let comment_html = `
+              <div class="flex1">
+              <div class="card1">
+                <div class="card-body">${data.name} <div class="date">(${written_time})</div></div>
+              </div>
+              <div class="card2">
+                <div class="card-body">${data.content}</div>
+              </div>
+            </div>`;
+
+        $(`#allcard_id`).append(comment_html);
+      });
+
+      // 팀 소개 페이지 이동
+      $("#team_details_btn").click(async function () {
+        window.location.assign("detail.html");
+      });
+    </script>
+
+    <script>
+      function navigate(url) {
+        // 방명록으로 이동하는 용도
+        window.location.assign(url);
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="mybtn">
+      <div class="visitBtn" onclick="navigate('detail.html')">팀 소개</div>
+    </div>
+
+    <div style="display: flex; justify-content: center">
+      <div class="mytitle" onclick="navigate('index.html')">
+        <div><캣66></div>
+      </div>
+    </div>
+
+    <div class="floatingbox">
+      <div class="formcontainer">
+        <div class="name9">
+          <type>이름 </type>
+        </div>
+        <div class="form">
+          <input
+            type="email"
+            class="form-control"
+            id="name_input_box"
+            placeholder="2~6글자 입력해 주세요!"
+          />
+          <label for="floatingInput"></label>
+        </div>
+        <div class="mybtn2">
+          <button type="button" class="btn btn-secondary" id="write_btn">
+            등록
+          </button>
+        </div>
+      </div>
+      <div class="formcontainer">
+        <div class="name9">
+          <type>내용</type>
+        </div>
+        <div class="form2">
+          <input
+            type="email"
+            class="form-control"
+            id="content_input_box"
+            placeholder="2~30글자 입력해 주세요!"
+          />
+          <label for="floatingInput"></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="allcard" id="allcard_id"></div>
+  </body>
+</html>
