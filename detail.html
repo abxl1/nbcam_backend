@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cat66 상세페이지</title>
+
+    <style>
+      /* 팀 소개 구역 */
+
+      body {
+        font-family: "Jua", sans-serif;
+        margin: 0;
+      }
+
+      .back {
+        background-image: url('./assets/img/main_cat(2).jpg');
+        background-size: contain;
+        background-repeat: repeat-y;
+        margin: 0;
+        padding-bottom: 100px;
+      }
+
+      .bannerBox {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .bannerBox > p {
+        margin: 10px auto;
+        font-size: 80px;
+        border-radius: 30px;
+        color: rgb(69, 59, 53); 
+
+        cursor: pointer;
+        transition: background-color 0.2s ease 0.1s;
+
+        width: 400px;
+        height: 100px;
+
+        border: 7px solid rgb(235, 179, 134);
+        background-color: rgb(255, 242, 231);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .bannerBox > p:hover {
+        background-color: rgb(235, 179, 134);
+      }
+
+      .bannerBox > span {
+        font-size: 40px;
+        color : rgb(69, 59, 53); 
+        text-shadow: 2px 2px 2px white;
+      }
+
+      .teamAbout {
+        margin: 10px auto;
+        padding: 20px;
+
+        width: 80%;
+
+        border-radius: 20px;
+        border: 5px solid rgb(235, 179, 134);
+        background-color: rgb(255, 242, 231);
+        
+        font-size: 20px;
+      }
+
+      .flexBox {
+        display: flex;
+        justify-content: flex-start;
+        background-color: transparent;
+      }
+
+      .flexBox > div {
+        width: 50%;
+        padding: 10px 20px;
+      }
+
+      .visitBtnWrp {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 10px;
+        padding-top: 60px;
+      }
+
+      .visitBtnWrp > div {
+        padding: 10px;
+
+        background-color: rgb(253, 218, 190);
+        color: rgb(4, 4, 4);
+        border-radius: 10px;
+
+        cursor: pointer;
+        transition: background-color 0.2s ease 0.1s;
+      }
+
+      .visitBtnWrp > div:hover {
+        background-color: rgb(235, 179, 134);  
+      }
+
+      /* 팀원 구역 */
+
+      .member_list {
+        background-color: white;
+        width: 80%;
+        border-radius: 20px;
+
+        align-self: center;
+        margin: 30px auto;
+        padding: 20px;
+
+        border: 5px solid rgb(235, 179, 134);
+        background-color: rgb(255, 242, 231);
+      }
+
+        .member_line {
+            padding: 20px 0px;
+            overflow: auto;
+            background-color: transparent;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .member_line:before {
+            display: inline-block;
+            width: 1px;
+            content: '';
+        }
+
+        .member_line:after {
+            display: inline-block;
+            width: 1px;
+            content: '';
+        }
+
+        .member {
+            background-color:  white;
+
+            padding: 10px;
+            border-radius: 20px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .member:hover {
+          background-color: rgb(235, 192, 158);
+        }
+
+        .member>a {
+            font-size: 23px;
+            color: rgb(69, 59, 53); 
+        }
+
+        .photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 20px;
+            margin-bottom: 5px;
+            object-fit: cover;
+        }
+
+        /* modal 구역 */
+
+        .modal {
+            position: fixed;
+            display: none;
+
+            justify-content: center;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal_body {
+            position: absolute;
+            top: 50%;
+
+            width: 700px;
+            height: 400px;
+
+            padding: 30px;
+
+            text-align: center;
+
+            background-color: rgb(255, 242, 231);
+            border-radius: 10px;
+            border: 5px solid rgb(235, 179, 134);
+            box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+
+            /* 모듈창열었을때 위치설정 가운데로  */
+            transform: translateY(-50%);
+        }
+
+        .modal_close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 40px;
+            color: rgb(69, 59, 53); 
+        }
+
+        .no-scroll {
+          /* modal 창 열려 있을 때 뒷 배경의 스크롤 막기(고정)*/
+            overflow: hidden;
+        }
+
+        .profile {
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .profile > img {
+            width: 300px;
+            height: 350px;
+            border-radius: 20px;
+            border: 5px solid white;
+            object-fit: cover;
+        }
+
+        .profile > div {
+            width: 300px;
+            height: 350px;
+            
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            justify-content: start;
+        }
+
+        /* 텍스트 왼쪽 정렬 */
+        .profile > div > p {
+            text-align: left;
+            font-size: 18px;
+        }
+        .profile > div > p > span {
+            text-align: left; 
+        }
+
+    </style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="module">
+      // Firebase SDK 라이브러리 가져오기
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+      import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+      import {
+        collection,
+        addDoc,
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+      import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+      // Firebase 구성 정보 설정
+      const firebaseConfig = {
+        apiKey: "AIzaSyAio8CbaweQ5YCb0-Zx3STpG8gP6sVyp0E",
+        authDomain: "cat66-d3757.firebaseapp.com",
+        projectId: "cat66-d3757",
+        storageBucket: "cat66-d3757.appspot.com",
+        messagingSenderId: "238522357447",
+        appId: "1:238522357447:web:2d3c6a05f1402496da50e2",
+      };
+
+      // Firebase 인스턴스 초기화
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      // member 별 데이터를 전역변수로 저장
+      const membersData = [];
+
+        // 팀 소개 데이터를 가져오고 화면에 띄우는 함수 (나영)
+        async function loadTeam() {
+            try {
+                const querySnapshot = await getDocs(collection(db, 'team'));
+                querySnapshot.forEach(doc => {
+
+                    const teamData = { // 객체 형태로 선언
+                        teamName: doc.data().name,
+                        teamIntroduction: doc.data().introduction,
+                        teamProject: doc.data().project,
+                        teamGoal: doc.data().goal,
+                        teamTime: doc.data().time,
+                        teamRule: doc.data().rule
+                    };
+                    
+                    // body에 데이터 표시하기, 객체 형태로 할당
+                    document.getElementById('teamName').innerText = teamData.teamName;
+                    document.getElementById('teamIntroduction').innerText = teamData.teamIntroduction;
+                    document.getElementById('teamProject').innerText = teamData.teamProject;
+                    document.getElementById('teamGoal').innerText = teamData.teamGoal;
+
+            const teamTimeContainer =
+              document.getElementById("teamTimeContainer");
+            teamTimeContainer.innerHTML = ""; // 기존 내용을 초기화
+            teamData.teamTime.forEach((time, index) => {
+              const timeElement = document.createElement("span");
+              timeElement.innerText = `${time}`;
+              teamTimeContainer.appendChild(timeElement);
+              teamTimeContainer.appendChild(document.createElement("br"));
+            });
+
+                    const teamRuleContainer = document.getElementById('teamRuleContainer');
+                    teamRuleContainer.innerHTML = ''; // 기존 내용을 초기화
+                    teamData.teamRule.forEach((rule, index) => {
+                        const ruleElement = document.createElement('span');
+                        ruleElement.innerText = `${index + 1}) ${rule}`;
+                        teamRuleContainer.appendChild(ruleElement);
+                        teamRuleContainer.appendChild(document.createElement('br')); 
+                    });
+                });
+            } catch (error) {
+                console.error('팀 데이터 불러오기 오류 : ', error);
+            }
+        };
+        
+        // member 전체 데이터 로드, 사진과 이름 화면에 띄우기
+        async function loadMembers() {
+            const members = await getDocs(collection(db, 'member'));
+                let index = 1;
+                members.forEach((member) => {
+                    membersData.push(member.data());    // 전역변수에 데이터 저장
+
+                    document.getElementById(`img_member${index}`).src = member.data().photo;
+                    document.getElementById(`name_member${index++}`).textContent = member.data().name;
+                });
+        }
+
+        // 페이지 로드 시 데이터 초기화 
+        function initialize() {
+            loadTeam();
+            loadMembers();
+        }
+
+        // 페이지가 로드될 때 실행
+        window.onload = initialize;
+
+
+        // modal
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.querySelector('.modal');
+            const modalClose = document.querySelector('.modal_close');
+            const photos = document.querySelectorAll('.photo');
+
+            // 사진 클릭 시 modal 띄우기
+            photos.forEach((photo, index) => {
+                photo.addEventListener('click', () => {
+                    // membersData와 member별 태그 매칭
+                    const profile = membersData[index];
+                    document.getElementById('profile_img').src = profile.photo;
+                    document.getElementById('profile_name').textContent = "["+profile.name+"]";
+                    document.getElementById('profile_mbti').textContent = profile.mbti;
+                    document.getElementById('profile_blog').textContent = profile.blog;
+                    document.getElementById('profile_strengths').textContent = profile.strengths;
+
+                    modal.style.display = 'flex';   // 모달 창 보이기
+                    document.body.classList.add('no-scroll'); // 뒷 배경 고정
+                });
+            });
+
+            // x 클릭 시 modal 닫기
+            modalClose.addEventListener('click', () => {
+                modal.style.display = 'none'; // 모달 창 감추기
+                document.body.classList.remove('no-scroll'); // 뒷 배경 고정 해제
+            });
+
+            // modal 외부 클릭 시 modal 닫기
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.classList.remove('no-scroll'); 
+                }
+            });
+        });
+
+    </script>
+    <script>
+      function navigate(url) {
+        // 방명록으로 이동하는 용도
+        window.location.assign(url);
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="back">
+    <div class="bannerBox">
+      <p onclick="navigate('index.html')"><캣66></p>
+      <span><b>Team66</b></span>
+    </div>
+
+    <!-- 나영님 / 팀 내용 구역 -->
+    <div class="teamAbout">
+      <div class="flexBox">
+        <div>
+          <div>
+            <b>[팀 소개]</b><br />
+            팀명 : <span id="teamName"></span><br />
+            팀 소개 : <span id="teamIntroduction"></span><br />
+          </div>
+          <br />
+          <div>
+            <b>[프로젝트 목표]</b><br />
+            [<span id="teamProject"></span>]
+            <span id="teamGoal"></span>
+          </div>
+          <br />
+          <div>
+            <b>[팀 약속]</b><br />
+            <span id="teamTimeContainer"></span>
+          </div>
+        </div>
+        <div>
+          <b>[팀 규칙]</b><br />
+          <span id="teamRuleContainer"></span>
+          <div class="visitBtnWrp" onclick="navigate('guestbook.html')">
+            <div>방명록</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 지은님 / 팀원 구역 -->
+    <div class="member_list">
+        <div class="member_line">
+            <div class="member">
+                <img id="img_member1" class="photo" src="">
+                <a id="name_member1">member1</a>
+            </div>
+            <div class="member">
+                <img id="img_member2" class="photo" src="">
+                <a id="name_member2">member2</a>
+            </div>
+        </div>
+        <div class="member_line">
+            <div class="member">
+                <img id="img_member3" class="photo" src="">
+                <a id="name_member3">member3</a>
+            </div>
+            <div class="member">
+                <img id="img_member4" class="photo" src="">
+                <a  id="name_member4">member4</a>
+            </div>
+            <div class="member">
+                <img id="img_member5" class="photo" src="">
+                <a  id="name_member5">member5</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal">
+        <div class="modal_body">
+            <span class="modal_close">&times;</span>
+            <div class="profile">
+                <img id="profile_img" src="">
+                <div>
+                    <h1 id="profile_name"></h2>
+                    <p><b>MBTI</b><br>: <span id="profile_mbti"></span></p>
+                    <p><b>Blog</b><br>: <span id="profile_blog"></span></p>
+                    <p><b>자신의 장점</b><br>: <span id="profile_strengths"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  </body>
+</html>
