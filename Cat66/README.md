@@ -1,7 +1,5 @@
 ![헤더 이미지](assets/readMe/header.png)
 
-<div align="center">
-
 ## # 팀 소개 Team About
 팀명 Team Name : 팀 66 Team 66 </br>
 " 우리는 자바 6기 6조. 개발자가 되기 위해 왔지🌟 "
@@ -12,6 +10,18 @@
 : 팀원들을 소개하는 웹 페이지를 구상하는 대화를 나누던 중, </br>
 팀원들이 모두 고양이를 좋아한다는 공통점이 있었습니다 🐱 </br>
 고양이가 가득한 캣66 페이지로 놀러오세요! 🎈
+
+## # 디렉터리 구조
+
+Cat66 </br>
+├── assets </br>
+│ ├── img  </br>
+│ ├── readMe </br>
+│ ├── test </br>
+├── README.md </br>
+├── detail.html </br>
+├── guestbook.html </br>
+└── index.html </br>
 
 ## # 사용 스택 Using Stack
 <a><img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=fff"/></a>
@@ -56,6 +66,3 @@
 ##### # 캣66 웹사이트 https://cat66.vercel.app/index.html 🧶
 ##### # 깃허브 주소 https://github.com/jhgit95/Cat66.git 💾
 ##### # 노션 주소 https://www.notion.so/teamsparta/66-66-7320a6a900524d43a50420cd107dc434 📒
-
-
-</div>
