@@ -5,49 +5,56 @@ public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("첫 번째 숫자를 입력하세요: ");
-        int Num1 = sc.nextInt();
-        sc.nextLine();
+        while (true) {
+            System.out.print("첫 번째 숫자를 입력하세요: ");
+            int Num1 = sc.nextInt();
+            sc.nextLine();
 
-        System.out.print("사칙연산 기호를 입력하세요: ");
-        String Calc = sc.nextLine();
+            System.out.print("사칙연산 기호를 입력하세요: ");
+            String Calc = sc.nextLine();
 
-        System.out.print("두 번째 숫자를 입력하세요: ");
-        int Num2 = sc.nextInt();
+            System.out.print("두 번째 숫자를 입력하세요: ");
+            int Num2 = sc.nextInt();
 
-        int result = 0;
-        boolean valid = true;
+            int result = 0;
+            boolean valid = true;
 
-        switch (Calc) {
-            case "+" :
-                result = Num1 + Num2;
-                break;
-            case "-" :
-                result = Num1 - Num2;
-                break;
-            case "*" :
-                result = Num1 * Num2;
-                break;
-            case "/":
-                if (Num2 != 0) {
-                    result = Num1 / Num2;
+            switch (Calc) {
+                case "+":
+                    result = Num1 + Num2;
                     break;
-                }
+                case "-":
+                    result = Num1 - Num2;
+                    break;
+                case "*":
+                    result = Num1 * Num2;
+                    break;
+                case "/":
+                    if (Num2 != 0) {
+                        result = Num1 / Num2;
+                        break;
+                    } else {
+                        System.out.println("0으로 나눌 수 없습니다. 다른 숫자를 입력하세요.");
+                        valid = false;
+                        break;
+                    }
 
-                else {
-                    System.out.println("0으로 나눌 수 없습니다. 다른 숫자를 입력하세요.");
+                default:
+                    System.out.print("사칙연산 기호인 '+', '-', '*', '/' 중 한 가지를 입력하세요.");
                     valid = false;
                     break;
-                }
+            }
 
-            default:
-                System.out.print("사칙연산 기호인 '+', '-', '*', '/' 중 한 가지를 입력하세요.");
-                valid = false;
+            if (valid) {
+                System.out.println("결과 : " + result);
+            }
+            sc.nextLine();
+            System.out.print("종료하시려면 'exit'을(를) 입력하고, 계속하시려면 'enter'를 눌러 주세요 : ");
+
+            if (sc.nextLine().equals("exit")) {
+                System.out.println("프로그램이 종료되었습니다.");
                 break;
-        }
-
-        if (valid) {
-            System.out.print("결과 : " + result);
+            }
         }
     }
 }
