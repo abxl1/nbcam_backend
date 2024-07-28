@@ -1,20 +1,21 @@
 package calculator;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int[] arr = new int[3];
+        ArrayList<Integer> arr = new ArrayList<>();
         int count = 0;
 
         while (true) {
 
             System.out.print("첫 번째 숫자를 입력하세요: ");
             int Num1 = sc.nextInt();
-            sc.nextLine();
 
             System.out.print("사칙연산 기호를 입력하세요: ");
+            sc.nextLine();
             String Calc = sc.nextLine();
 
             System.out.print("두 번째 숫자를 입력하세요: ");
@@ -51,17 +52,18 @@ public class App {
 
             if (valid) {
                 System.out.println("결과 : " + result);
-                arr[count] = result;
-                count++;
-                if (count == 3) {
-                    for (int i = 1; i < count; i++) {
-                        arr[i - 1] = arr[i];
-                        System.out.println(arr[i-1]);
-                    }
-                }
+                arr.add(result);
             }
+
+            System.out.println("가장 먼저 저장된 연산 결과를 삭제하시겠습니까? (remove 입력 : 삭제, enter 입력 : 계속)");
             sc.nextLine();
-            System.out.print("종료하시려면 'exit'을(를) 입력하고, 계속하시려면 'enter'를 눌러 주세요 : ");
+
+            if (sc.nextLine().equals("remove")) {
+                arr.remove(0);
+                System.out.println(arr.toString());
+            }
+
+            System.out.println("더 계산하시겠습니까? (exit 입력 : 종료, enter 입력 : 계속)");
 
             if (sc.nextLine().equals("exit")) {
                 System.out.println("프로그램이 종료되었습니다.");
