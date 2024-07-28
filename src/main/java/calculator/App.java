@@ -63,6 +63,13 @@ public class App {
                 System.out.println(arr.toString());
             }
 
+            System.out.println("저장된 연산결과를 모두 조회하시겠습니까? (inquiry 입력 : 조회)");
+//            String inquiry = sc.nextLine();
+
+            if (sc.nextLine().equals("inquiry")) {
+                System.out.println(arr.toString());
+            }
+
             System.out.println("더 계산하시겠습니까? (exit 입력 : 종료, enter 입력 : 계속)");
 
             if (sc.nextLine().equals("exit")) {
