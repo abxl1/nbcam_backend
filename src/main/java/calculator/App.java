@@ -5,7 +5,11 @@ public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
+        int[] arr = new int[10];
+        int count = 0;
+
         while (true) {
+
             System.out.print("첫 번째 숫자를 입력하세요: ");
             int Num1 = sc.nextInt();
             sc.nextLine();
@@ -47,6 +51,8 @@ public class App {
 
             if (valid) {
                 System.out.println("결과 : " + result);
+                arr[count] = result;
+                count++;
             }
             sc.nextLine();
             System.out.print("종료하시려면 'exit'을(를) 입력하고, 계속하시려면 'enter'를 눌러 주세요 : ");
