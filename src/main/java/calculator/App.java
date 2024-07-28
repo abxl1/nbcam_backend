@@ -5,7 +5,7 @@ public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int[] arr = new int[10];
+        int[] arr = new int[3];
         int count = 0;
 
         while (true) {
@@ -53,6 +53,12 @@ public class App {
                 System.out.println("결과 : " + result);
                 arr[count] = result;
                 count++;
+                if (count == 3) {
+                    for (int i = 1; i < count; i++) {
+                        arr[i - 1] = arr[i];
+                        System.out.println(arr[i-1]);
+                    }
+                }
             }
             sc.nextLine();
             System.out.print("종료하시려면 'exit'을(를) 입력하고, 계속하시려면 'enter'를 눌러 주세요 : ");
