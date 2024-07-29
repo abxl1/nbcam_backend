@@ -8,8 +8,9 @@ public class App {
         Calculator calculator = new Calculator();
         Scanner sc = new Scanner(System.in);
 
-//        ArrayList<Integer> arr = calculator.getArrayList(); // getter 사용
-
+        // setter가 필요한 상황 -> 컬렉션 전체를 수정해야 할 때
+        // 현재는 새 결과를 넣어 전체적인 요소의 변화는 필요가 없음 -> getter 사용
+        ArrayList<Integer> arr = calculator.getArrayList(); // getter 사용
 
         while (true) {
 
@@ -28,20 +29,20 @@ public class App {
             result = calculator.calculate(num1, num2, calc);
 
             System.out.println("결과 : " + result);
-            calculator.arr.add(result);
+            arr.add(result);
 
             System.out.println("가장 먼저 저장된 연산 결과를 삭제하시겠습니까? (remove 입력 : 삭제, enter 입력 : 계속)");
             sc.nextLine();
 
             if (sc.nextLine().equals("remove")) {
-                calculator.arr.remove(0);
+                arr.remove(0);
             }
 
             System.out.println("저장된 연산결과를 모두 조회하시겠습니까? (inquiry 입력 : 조회, enter 입력 : 계속)");
 //            String inquiry = sc.nextLine();
 
             if (sc.nextLine().equals("inquiry")) {
-                System.out.println(calculator.arr.toString());
+                System.out.println(arr.toString());
             }
 
             System.out.println("더 계산하시겠습니까? (exit 입력 : 종료, enter 입력 : 계속)");

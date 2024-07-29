@@ -2,11 +2,11 @@ package calculator;
 import java.util.ArrayList;
 
 public class Calculator {
-    public ArrayList<Integer> arr = new ArrayList<>();
+    private ArrayList<Integer> arr = new ArrayList<>();
 
-//    public ArrayList<Integer> getArrayList() { // getter 사용
-//        return arr;
-//    }
+    public ArrayList<Integer> getArrayList() { // getter 사용
+        return arr;
+    }
 
     public int calculate(int num1, int num2, String calc) {
 
