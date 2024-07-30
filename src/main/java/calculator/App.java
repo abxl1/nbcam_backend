@@ -30,7 +30,7 @@ public class App {
             result = calculator.calculate(num1, num2, calc);
 
             try {
-                exception.exceptInvalidOperator(num1, num2, calc);
+                calculator.calcInvalidOperator(calc);
             } catch(IllegalArgumentException e) { // 연산 기호를 잘못 입력한 경우
                 System.out.println("올바른 연산기호 (+, -, *, /)를 입력해야 합니다.");
                 throw new IllegalArgumentException();
