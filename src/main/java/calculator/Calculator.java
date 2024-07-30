@@ -1,8 +1,10 @@
 package calculator;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Calculator {
     private ArrayList<Integer> arr = new ArrayList<>();
+    Scanner sc = new Scanner(System.in);
 
     public ArrayList<Integer> getArrayList() { // getter 사용
         return arr;
@@ -43,5 +45,19 @@ public class Calculator {
                 break;
             default: throw new IllegalArgumentException();
         }
+    }
+
+    public String removeInvalid(String remove) {
+        if (remove.equals("remove")) {
+            arr.remove(0);
+        }
+        return remove;
+    }
+
+    public String inquiryInvalid(String inquiry) {
+        if (inquiry.equals("inquiry")) {
+            System.out.println(arr.toString());
+        }
+        return inquiry;
     }
 }
