@@ -29,17 +29,13 @@ public class App {
 
             result = calculator.calculate(num1, num2, calc);
 
-
-            // 수정 필요, 나눗셈 연산 기능 오류 있음
             try {
-                exception.exceptInvalidOperator(calc);
-                exception.exceptDivZero(num2, calc);
-            } catch(ArithmeticException e){ // 연산 기호를 잘못 입력한 경우
-                System.out.println("0으로 나눌 수 없습니다.");
-                throw new ArithmeticException();
-            } catch(IllegalArgumentException e) { // 0으로 나누는 경우
-             System.out.println("올바른 연산기호 (+, -, *, /)를 입력해야 합니다.");
-             throw new IllegalArgumentException();
+                exception.exceptInvalidOperator(num1, num2, calc);
+            } catch(IllegalArgumentException e) { // 연산 기호를 잘못 입력한 경우
+                System.out.println("올바른 연산기호 (+, -, *, /)를 입력해야 합니다.");
+                throw new IllegalArgumentException();
+                // 에러 메시지를 throw하면서 코드 진행이 종료됨.
+                // 종료시키지 않고 계속 진행시킬 수 있는가? ''' try...catch?
             }
 
             System.out.println("결과 : " + result);
