@@ -29,6 +29,8 @@ public class App {
 
             result = calculator.calculate(num1, num2, calc);
 
+
+            // 수정 필요, 나눗셈 연산 기능 오류 있음
             try {
                 exception.exceptInvalidOperator(calc);
                 exception.exceptDivZero(num2, calc);
