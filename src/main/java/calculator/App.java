@@ -45,11 +45,11 @@ public class App {
             System.out.println("가장 먼저 저장된 연산 결과를 삭제하시겠습니까? (remove 입력 : 삭제, enter 입력 : 계속)");
             sc.nextLine();
             String remove = sc.nextLine();
-            calculator.removeInvalid(remove);
+            calculator.removeInvalid(remove); // 첫 저장된 연산 결과 삭제
 
             System.out.println("저장된 연산결과를 모두 조회하시겠습니까? (inquiry 입력 : 조회, enter 입력 : 계속)");
             String inquiry = sc.nextLine();
-            calculator.inquiryInvalid(inquiry);
+            calculator.inquiryInvalid(inquiry); // 연산 결과 모두 조회
 
             System.out.println("더 계산하시겠습니까? (exit 입력 : 종료, enter 입력 : 계속)");
             if (sc.nextLine().equals("exit")) {
