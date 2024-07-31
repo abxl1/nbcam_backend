@@ -6,7 +6,6 @@ public class App {
 
     public static void main(String[] args) {
         Calculator calculator = new Calculator();
-        Exception exception = new Exception();
         Scanner sc = new Scanner(System.in);
 
         // setter가 필요한 상황 -> 컬렉션 전체를 수정해야 할 때
