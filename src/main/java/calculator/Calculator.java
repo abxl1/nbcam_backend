@@ -1,10 +1,12 @@
 package calculator;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Calculator {
-    private ArrayList<Integer> arr = new ArrayList<>();
-    Scanner sc = new Scanner(System.in);
+    private ArrayList<Integer> arr;
+
+    public Calculator(ArrayList<Integer> arr) { // 생성자를 통해서 매개변수인 컬렉션 리스트를 초기화
+        this.arr = arr;
+    }
 
     public ArrayList<Integer> getArrayList() { // getter 사용
         return arr;

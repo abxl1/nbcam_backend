@@ -5,12 +5,14 @@ import java.util.Scanner;
 public class App {
 
     public static void main(String[] args) {
-        Calculator calculator = new Calculator();
+        ArrayList<Integer> arrList = new ArrayList<>();
+        Calculator calculator = new Calculator(arrList);
+
         Scanner sc = new Scanner(System.in);
 
         // setter가 필요한 상황 -> 컬렉션 전체를 수정해야 할 때
         // 현재는 새 연산값을 넣고 첫 연산값을 빼므로 전체적인 요소의 변화는 필요가 없음
-        ArrayList<Integer> arr = calculator.getArrayList(); // getter 사용
+        ArrayList<Integer> processedArray = calculator.getArrayList(); // getter 사용
 
         while (true) {
 
@@ -38,7 +40,7 @@ public class App {
             }
 
             System.out.println("결과 : " + result);
-            arr.add(result);
+            processedArray.add(result);
 
             System.out.println("가장 먼저 저장된 연산 결과를 삭제하시겠습니까? (remove 입력 : 삭제, enter 입력 : 계속)");
             sc.nextLine();
