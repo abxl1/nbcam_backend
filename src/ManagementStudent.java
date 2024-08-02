@@ -18,13 +18,23 @@ public class ManagementStudent {
         String studentName = sc.next();
         sc.nextLine();
 
-
+    // 코드를 입력받아 과목명으로 저장
         for(Subject subject : CampManagementApp.subjectStore){
             System.out.println(subject.getSubjectId()+" "+subject.getSubjectName());
         }
         System.out.print("수강 과목 코드입력[,로 구분 뛰어쓰기 없이 입력해 주세요 ex)SU1,SU2...]: \n");
-        String[] subjects = sc.nextLine().split(",");
 
+        String[] subjectsCode = sc.nextLine().split(",");
+        String[] subjects = new String[subjectsCode.length];
+        for (int i = 0; i < subjectsCode.length; i++) {
+            for (Subject subject : CampManagementApp.subjectStore) {
+                if (subjectsCode[i].equals(subject.getSubjectId())) {
+                    subjects[i] = subject.getSubjectName();
+                }
+            }
+        }
+
+        // 학생 객체 생성하여 저장
         String seq = CampManagementApp.sequence(CampManagementApp.INDEX_TYPE_STUDENT);
         Student input = new Student(seq, studentName, subjects);
 
