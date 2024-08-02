@@ -3,6 +3,7 @@
 import model.Student;
 import model.Subject;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 // 점수관리 클래스
@@ -50,20 +51,29 @@ public class ManagementStudent {
     }
 
     // 기능 구현 - 김나영님
-    // 수강생 목록 조회
+    // 등록된 수강생 전체 목록 조회
     public static void inquireStudent() {
         String newStudentId;
         String newStudentName;
-//        String[] newSubjects;
+        String[] newSubjects;
+
+        // 과목 테스트
+//        String[] a = {"a","b"};
 
         System.out.println("\n수강생 목록을 조회합니다...");
+        System.out.println();
+
+        // 학생 추가 테스트 (Student.java 필드구조 잘 확인하기............!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+//        CampManagementApp.studentStore.add(new Student("0", "kim", a));
+//        CampManagementApp.studentStore.add(new Student("1", "john", a));
+
 
         for (int i = 0; i < CampManagementApp.studentStore.size() ; i++) {
             newStudentId = CampManagementApp.studentStore.get(i).getStudentId();
             newStudentName = CampManagementApp.studentStore.get(i).getStudentName();
+            newSubjects = CampManagementApp.studentStore.get(i).getSubjects();
 
-            System.out.println (" 학생 아이디 : " + newStudentId + ", 학생 이름 : " + newStudentName );
-            System.out.println();
+            System.out.println (i+1 + "번 학생 고유번호 : " + newStudentId + " / 이름 : " + newStudentName + " / 선택과목 : " + Arrays.toString(newSubjects));
         }
 
         if(CampManagementApp.studentStore.isEmpty()) {
