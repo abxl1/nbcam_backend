@@ -1,3 +1,8 @@
+
+
+import model.Student;
+import model.Subject;
+
 import java.util.Scanner;
 
 // 점수관리 클래스
@@ -12,13 +17,19 @@ public class ManagementStudent {
         String studentName = sc.next();
         sc.nextLine();
 
-        // 수강생 수강 과목 여러개 입력받기
-        // 예시 코드입니다
-        System.out.print("수강 과목 입력(,로 구분 해 주세요.): ");
+
+        for(Subject subject : CampManagementApp.subjectStore){
+            System.out.println(subject.getSubjectId()+" "+subject.getSubjectName());
+        }
+        System.out.print("수강 과목 코드입력[,로 구분 뛰어쓰기 없이 입력해 주세요 ex)SU1,SU2...]: \n");
         String[] subjects = sc.nextLine().split(",");
 
-        // 수강생 인스턴스 생성 예시 코드
-        // Student student = new Student(CampManagementApp.sequence(CampManagementApp.INDEX_TYPE_STUDENT), studentName, subjects);
+        String seq = CampManagementApp.sequence(CampManagementApp.INDEX_TYPE_STUDENT);
+        Student input = new Student(seq, studentName, subjects);
+
+        CampManagementApp.studentStore.add(input);
+
+
 
 
 
