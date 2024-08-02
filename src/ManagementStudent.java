@@ -57,13 +57,13 @@ public class ManagementStudent {
         String newStudentName;
         String[] newSubjects;
 
-        // 과목 테스트
+        // 과목 선언 테스트
 //        String[] a = {"a","b"};
 
         System.out.println("\n수강생 목록을 조회합니다...");
         System.out.println();
 
-        // 학생 추가 테스트 (Student.java 필드구조 잘 확인하기............!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+        // 학생 추가 테스트
 //        CampManagementApp.studentStore.add(new Student("0", "kim", a));
 //        CampManagementApp.studentStore.add(new Student("1", "john", a));
 
@@ -76,6 +76,7 @@ public class ManagementStudent {
             System.out.println (i+1 + "번 학생 고유번호 : " + newStudentId + " / 이름 : " + newStudentName + " / 선택과목 : " + Arrays.toString(newSubjects));
         }
 
+        // 등록된 수강생 없을 때 예외처리
         if(CampManagementApp.studentStore.isEmpty()) {
             System.out.println();
             System.out.println("등록된 수강생이 없습니다.");
