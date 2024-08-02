@@ -13,10 +13,21 @@ public class ManagementStudent {
     // 수강생 등록
     public static void createStudent() {
         Scanner sc = new Scanner(System.in);
+        boolean vaildInput = false;
         System.out.println("\n수강생을 등록합니다...");
-        System.out.print("수강생 이름 입력: ");
+        System.out.print("수강생 이름 입력(한글만입력가능): ");
         String studentName = sc.next();
         sc.nextLine();
+        while (!vaildInput){
+            if(studentName.matches("^[가-힣]+$")){
+                vaildInput = true;
+            }else {
+                System.out.println("유효하지 않은 입력입니다. 이름은 한글로만 입력해주세요.");
+                studentName = sc.next();
+                sc.nextLine();
+                }
+            }
+
 
     // 코드를 입력받아 과목명으로 저장
         for(Subject subject : CampManagementApp.subjectStore){
