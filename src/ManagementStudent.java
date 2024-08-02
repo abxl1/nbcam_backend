@@ -41,7 +41,24 @@ public class ManagementStudent {
     // 기능 구현 - 김나영님
     // 수강생 목록 조회
     public static void inquireStudent() {
+        String newStudentId;
+        String newStudentName;
+//        String[] newSubjects;
+
         System.out.println("\n수강생 목록을 조회합니다...");
+
+        for (int i = 0; i < CampManagementApp.studentStore.size() ; i++) {
+            newStudentId = CampManagementApp.studentStore.get(i).getStudentId();
+            newStudentName = CampManagementApp.studentStore.get(i).getStudentName();
+
+            System.out.println (" 학생 아이디 : " + newStudentId + ", 학생 이름 : " + newStudentName );
+            System.out.println();
+        }
+
+        if(CampManagementApp.studentStore.isEmpty()) {
+            System.out.println();
+            System.out.println("등록된 수강생이 없습니다.");
+        }
 
 
 
