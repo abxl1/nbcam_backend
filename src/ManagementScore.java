@@ -66,6 +66,7 @@ public class ManagementScore {
                         Subject check = CampManagementApp.subjectStore.get(i);
                         if (check.getSubjectId().equals(subjectId)) {
                             subjectType = check.getSubjectType();
+                            break;
                         }
                     }
 
