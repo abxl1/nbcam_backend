@@ -1,17 +1,55 @@
-
 import model.Score;
+import model.Student;
 import model.Subject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 // 점수관리 클래스
 public class ManagementScore {
 
-    // 사용자로부터 관리할 수강생 ID를 입력받는 메서드. 수정X
+    static List<Student> students = CampManagementApp.studentStore;
+    static List<Subject> subjects = CampManagementApp.subjectStore;
+    static List<Score> scores = CampManagementApp.scoreStore;
+
+    // 사용자로부터 관리할 수강생 ID를 입력받는 메서드.
     private static String getInputStudentId() {
         Scanner sc = new Scanner(System.in);
         System.out.print("\n관리할 수강생의 번호를 입력하시오 : ");
         return sc.next();
+    }
+
+    // 입력받은 수강생의 점수(Score)목록을 반환하는 메서드
+    private static List<Score> getStudentScores (String studentId) {
+        List<Score> studentScores = new ArrayList<>();
+        for (Score score : scores) {
+            if (studentId.equals(score.getStudentId())) {
+                studentScores.add(score);
+            }
+        }
+        return studentScores;
+    }
+
+    // 과목명(subjectName)이 수강생(studentId)의 수강중인 과목인지 체크하는 메서드
+    private static boolean isSubjectList (String studentId, String subjectName) {
+        for (Student student : students) {
+            if(student.getStudentId().equals(studentId) && Arrays.asList(student.getSubjects()).contains(subjectName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // 입력받은 과목명으로 과목 ID를 얻는 메서드.
+    private static String getSubjectId (String subjectName) {
+        for (Subject subject : subjects) {
+            if (subject.getSubjectName().equals(subjectName)) {
+                return subject.getSubjectId();
+            }
+        }
+        return "";
     }
 
     // 기능 구현 - 추종윤님
@@ -143,28 +181,48 @@ public class ManagementScore {
     // 기능 구현 - 한지은
     // 수강생의 특정 과목 회차별 등급 조회
     public static void inquireRoundGradeBySubject() {
+
+        //test input data(브랜치 병합 시 삭제 예정)
+        students.add(new Student("st1", "수강생1", new String[]{"Java", "Spring"}));
+        scores.add(new Score("1", "st1", "SU1", 1, 100, "A"));
+        scores.add(new Score("2", "st1", "SU1", 2, 50, "F"));
+        scores.add(new Score("3", "st1", "SU3", 1, 90, "B"));
+        scores.add(new Score("4", "st1", "SU3", 2, 80, "C"));
+
+        // 조회할 수강생 ID 입력받기
         String studentId = getInputStudentId();
 
+        // 입력받은 수강생 ID로 등록된 점수(Score) 여부 체크
+        if (getStudentScores(studentId).isEmpty()) {
+            System.out.println("점수를 등록하지 않은 수강생입니다.");
+            return;
+        }
 
+        // 조회할 과목명 입력받기
+        Scanner sc = new Scanner(System.in);
+        System.out.print("조회할 과목을 입력하시오 : ");
+        String subjectName = sc.next();
 
+        // 입력받은 과목명이 수강생의 수강중인 과목에 포함되어있는지 체크
+        boolean includeSubject = isSubjectList(studentId, subjectName);
 
-        System.out.println("회차별 등급을 조회합니다...");
+        if(includeSubject){   // 수강중인 과목일 경우
+            // 과목 ID 얻기
+            String subjectId = getSubjectId(subjectName);
 
+            // 수강생의 점수 목록 중 과목 ID가 일치하는 점수 출력
+            System.out.println("회차별 등급을 조회합니다...");
+            for(Score score : getStudentScores(studentId)){
+                if (score.getSubjectId().equals(subjectId)){
+                    System.out.println("회차 = " + score.getRound() + " | 점수 = " + score.getScore() + " | 등급 = " + score.getGrade());
+                }
+            }
+            System.out.println("등급 조회 성공!");
 
+        }else { // 수강중인 과목이 아닐경우
+            System.out.println("수강 중인 과목이 아닙니다.");
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-        System.out.println("\n등급 조회 성공!");
     }
 
 
