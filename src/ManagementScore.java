@@ -21,6 +21,32 @@ public class ManagementScore {
         return sc.next();
     }
 
+    //점수를 받아 등급을 반환하는 메서드 등급 만들기
+    private static String returnGrade(String type, int score) {
+        String grade = "";
+
+        //필수 과목인지 선택과목인지
+        if(type.equals(CampManagementApp.SUBJECT_TYPE_MANDATORY)) {
+            //필수 과목일 경우 등급계산
+            if(95 <= score ) grade = "A";
+            else if(90 <= score && score < 95 ) grade = "B";
+            else if(80 <= score && score < 90 ) grade = "C";
+            else if(70 <= score && score < 80 ) grade = "D";
+            else if(60 <= score && score < 70 ) grade = "F";
+            else grade = "N";
+
+        } else {
+            //선택 과목일 경우 등급계산
+            if(90 <=score ) grade = "A";
+            else if(80 <= score && score < 90 ) grade = "B";
+            else if(70 <= score && score < 80 ) grade = "C";
+            else if(60 <= score && score < 75 ) grade = "D";
+            else if(50 <= score && score < 60 ) grade = "F";
+            else grade = "N";
+        }
+        return grade;
+
+    }
     // 입력받은 수강생의 점수(Score)목록을 반환하는 메서드
     private static List<Score> getStudentScores (String studentId) {
         List<Score> studentScores = new ArrayList<>();
@@ -52,16 +78,54 @@ public class ManagementScore {
         return "";
     }
 
+
     // 기능 구현 - 추종윤님
     // 수강생의 과목별 시험 회차 및 점수 등록
     public static void createScore() {
+
+        // 1.점수 등록할 사람 id입력받기 (저장)
         String studentId = getInputStudentId();
+
+        // 2. 해당 수강생 ID를 가진 수강생 찾기와 과목 등록
+        String[] studentSubjects= {};
+        for(Student student : students) {
+            if(student.getStudentId().equals(studentId)) { //학생비교
+                studentSubjects = student.getSubjects();  //수강목록을 가져오기
+            }
+        }
+
+        // 3. 등록할 회차 입력받기(사용자)
+        Scanner sc = new Scanner(System.in);
+        System.out.print("\n등록할 회차를 입력하시오 (1~10) : ");
+        int inputRound = sc.nextInt();
+        if (inputRound < 1 || inputRound > 10) {
+            //유효한 입력값
+            return;
+
+        }
+        // 이미 등록한 회차일 경우 예외처리
+
+        // 4. 과목별로 점수 입력받기(사용자)
+//        for(String sub :studentSubjects ) {
+//            // 4 - 1 과목별로 점수 입력받기(사용자) , 과목별로 담을 변수를 담기
+//            System.out.println( sub + "의 점수를 입력하시오 (1~100) :");
+//            // 4 - 2 입력받은 점수가 어느 등급인지 계산
+//            // 4 - 3 입력받은 값으로 score인스턴스에 생성하기
+//
+//        }
+
+
+
+
+
+
 
 
 
         System.out.println("시험 점수를 등록합니다...");
         // 점수 인스턴스 생성 예시 코드
         // Score score = new Score(CampManagementApp.sequence(CampManagementApp.INDEX_TYPE_SCORE), "학생ID","과목ID",1, 100, "A");
+
 
 
 
@@ -226,10 +290,10 @@ public class ManagementScore {
     }
 
 
-        private static String getInputSubjectId() {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("\n관리할 과목의 번호를 입력하시오 : ");
-            return sc.next();
-        }
+    private static String getInputSubjectId() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("\n관리할 과목의 번호를 입력하시오 : ");
+        return sc.next();
+    }
 
 }
