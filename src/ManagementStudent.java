@@ -76,6 +76,7 @@ public class ManagementStudent {
     public static void inquireStudent() {
         String newStudentId;
         String newStudentName;
+        String newStudentStatus;
         String[] newSubjects;
 
         // 과목 선언 테스트
@@ -92,9 +93,10 @@ public class ManagementStudent {
         for (int i = 0; i < CampManagementApp.studentStore.size() ; i++) {
             newStudentId = CampManagementApp.studentStore.get(i).getStudentId();
             newStudentName = CampManagementApp.studentStore.get(i).getStudentName();
+            newStudentStatus = CampManagementApp.studentStore.get(i).getStudentStatus();
             newSubjects = CampManagementApp.studentStore.get(i).getSubjects();
 
-            System.out.println (i+1 + "번 학생 고유번호 : " + newStudentId + " / 이름 : " + newStudentName + " / 선택과목 : " + Arrays.toString(newSubjects));
+            System.out.println (i+1 + "번 학생 고유번호 : " + newStudentId + " / 이름 : " + newStudentName + " / 상태 : " + newStudentStatus + " / 선택과목명 : " + Arrays.toString(newSubjects));
         }
 
         // 등록된 수강생 없을 때 예외처리
