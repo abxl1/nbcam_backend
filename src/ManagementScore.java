@@ -315,6 +315,39 @@ public class ManagementScore {
 
     }
 
+    // 기능 구현 - 한지은
+    // 수강생의 과목별 평균 등급 조회
+    public static void inquireAverageGradeBySubject() {
+        // 조회할 수강생 ID 입력받기
+        String studentId = getInputStudentId();
+        if (!checkStudentId(studentId)) {
+            System.out.println("등록되지 않은 수강생입니다.");
+            return;
+        }
+
+        // 입력받은 수강생 ID로 등록된 점수(Score) 여부 체크
+        if (getStudentScores(studentId).isEmpty()) {
+            System.out.println("점수를 등록하지 않은 수강생입니다.");
+            return;
+        }
+
+        // 과목별 평균 등급 조회
+        for(Subject subject : subjects){
+            int sumScore=0, avgScore=0, index=0;
+            for (Score score : getStudentScores(studentId)) {   // 해당 수강생의 점수목록을 전부 순회
+                if (score.getSubjectId().equals(subject.getSubjectId())) {
+                    sumScore += score.getScore();
+                    index++;
+                }
+            }
+            if (index==0) {continue;}
+            avgScore = sumScore / index; // 과목별 평균점수(총합점수/회차)
+            String avgGrade = returnGrade(subject.getSubjectName(), avgScore); // 과목타입, 평균 점수 넣어서 등급 받기
+            System.out.println("과목= "+subject.getSubjectName()+" | 평균점수= "+avgScore+" | 평균등급= "+avgGrade);
+        }
+        System.out.println("과목별 평균등급 조회 성공!");
+    }
+
 
             private static String getInputSubjectId() {
                 Scanner sc = new Scanner(System.in);
