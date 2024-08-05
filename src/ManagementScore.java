@@ -89,6 +89,9 @@ public class ManagementScore {
     }
 
 
+
+
+
     // 기능 구현 - 추종윤님
     // 수강생의 과목별 시험 회차 및 점수 등록
     public static void createScore() {
@@ -158,114 +161,71 @@ public class ManagementScore {
     public static void updateRoundScoreBySubject() {
         String studentId = getInputStudentId();
 
-        //for문 학생숫자*50회 돌아감
-        for (Score bigScore : scores) {
 
-            /*if (bigScore.getStudentId().equals(studentId)) {*/
-                //studentId 일치하는 학생 찾음 (50 개)
-            if(checkStudentId(studentId)){
-                String subName = getInputSubjectname();
+            if (getStudentScores(studentId).isEmpty()) {
+                System.out.println("점수가 없는 학생입니다.");
+                return;
+            }
 
-                if (isSubjectList(studentId, subName)) {
-            /*if (bigScore.getStudentId().equals(studentId)) {
-                String subjectId = getInputSubjectId();
-*/
-                    //그중에 입력한 과목 id가 있는지 확인 없으면 안듣는거
-                    //듣는다면 회차수 10개 만큼 나옴
-                    /*      if (bigScore.getSubjectId().equals(subjectId)) {*/
+            String subName = getInputSubjectname();
 
-                    System.out.println("회차입력");
-                    Scanner sc = new Scanner(System.in);
-                    int round = sc.nextInt();
+            if (!isSubjectList(studentId, subName)) {
+                System.out.println("해당 과목을 수강하지않습니다.");
+                return;
+            }
 
-                    /*//과목 타입 체크!
-                    String subjectType = "";
-                    for (int j = 0; j < subjects.size(); j++) {
-                        Subject check = subjects.get(i);
-                        if (check.getSubjectId().equals(subjectId)) {
-                            subjectType = check.getSubjectType();
-                            break;
-                        }
-                    }*/
+            String subjectId = getSubjectId(subName);
 
-                    //10개중 해당 회차를 찾아서 들어가기
-                    if (bigScore.getRound() == round) {
-                        System.out.println("(점수, 등급)은 (" + bigScore.getScore() + ", " + bigScore.getGrade() + ")입니다.");
-                        System.out.println("");
-                        System.out.println("몇 점으로 수정하시겠습니까? ");
-                        int newScore = sc.nextInt();
-                        System.out.println("과목의 타입을 입력하세요(MANDATORY or CHOICE)");
-                        String type = sc.next();
+        while(true) {
 
-                        //0<=점수<=100 인지 확인
-                        if (0 <= newScore && newScore <= 100) {
-                            bigScore.setGrade(returnGrade(type, newScore));
-                            bigScore.setScore(newScore);
-                            System.out.println(newScore + " / " + bigScore.getGrade() + " 로 변경되었습니다. ");
-                            break;
+            System.out.println("회차입력");
+            Scanner sc = new Scanner(System.in);
+            int round = sc.nextInt();
 
-                           /* bigScore.setScore(newScore);
 
-                            if (subjectType.equals("필수")) {
-                                if (95 <= newScore) {
-                                    bigScore.setGrade("A");
-                                    System.out.println(newScore + " / " + subjectType + " / " + bigScore.getGrade() + " 로 변경되었습니다. ");
-                                } else if (90 <= newScore) {
-                                    bigScore.setGrade("B");
-                                    System.out.println(newScore + " / " + subjectType + " / " + bigScore.getGrade() + " 로 변경되었습니다. ");
-                                } else if (80 <= newScore) {
-                                    bigScore.setGrade("C");
-                                    System.out.println(newScore + " / " + subjectType + " / " + bigScore.getGrade() + " 로 변경되었습니다. ");
-                                } else if (70 <= newScore) {
-                                    bigScore.setGrade("D");
-                                    System.out.println(newScore + " / " + subjectType + " / " + bigScore.getGrade() + " 로 변경되었습니다. ");
-                                } else if (60 <= newScore) {
-                                    bigScore.setGrade("E");
-                                    System.out.println(newScore + " / " + subjectType + " / " + bigScore.getGrade() + " 로 변경되었습니다. ");
-                                } else {
-                                    bigScore.setGrade("F");
-                                    System.out.println(newScore + " / " + subjectType + " / " + bigScore.getGrade() + " 로 변경되었습니다. ");
-                                }
-                            } else if (subjectType.equals("선택")) {
-                                if (90 <= newScore) {
-                                    bigScore.setGrade("A");
-                                    System.out.println(newScore + " / " + subjectType + " / " + bigScore.getGrade() + " 로 변경되었습니다. ");
-                                } else if (80 <= newScore) {
-                                    bigScore.setGrade("B");
-                                    System.out.println(newScore + " / " + subjectType + " / " + bigScore.getGrade() + " 로 변경되었습니다. ");
-                                } else if (70 <= newScore) {
-                                    bigScore.setGrade("V");
-                                    System.out.println(newScore + " / " + subjectType + " / " + bigScore.getGrade() + " 로 변경되었습니다. ");
-                                } else if (60 <= newScore) {
-                                    bigScore.setGrade("D");
-                                    System.out.println(newScore + " / " + subjectType + " / " + bigScore.getGrade() + " 로 변경되었습니다. ");
-                                } else if (50 <= newScore) {
-                                    bigScore.setGrade("E");
-                                    System.out.println(newScore + " / " + subjectType + " / " + bigScore.getGrade() + " 로 변경되었습니다. ");
-                                } else {
-                                    bigScore.setGrade("F");
-                                    System.out.println(newScore + " / " + subjectType + " / " + bigScore.getGrade() + " 로 변경되었습니다. ");
-                                }
-                            }*/
-                        } else {
-                            System.out.println("점수값을 0~100사이로 입력하세요");
-                            break;
-                        }
-                    } else {
-                        System.out.println("해당 회차가 없습니다.");
-                        break;
-                    }
-                } else {
-                    System.out.println("해당하는 과목이 없습니다.");
+            Score bigScore = null;
+
+            for (int i = 0; i < scores.size(); i++) {
+
+                if (scores.get(i).getStudentId().equals(studentId) && scores.get(i).getSubjectId().equals(subjectId) && scores.get(i).getRound() == round) {
+                    bigScore = getThatScore(studentId, subjectId, round);
                     break;
                 }
 
-            }else {
-                System.out.println("학생Id에 해당하는 정보가 없습니다.");
-                break;
+                if (i + 1 == scores.size() && bigScore == null) {
+                    System.out.println("해당 회차에 대한 정보가 없습니다.");
+                }
             }
+
+            if(bigScore == null) {
+                continue;
+            }
+
+            System.out.println("점수 : " + bigScore.getScore() + " 등급 : " + bigScore.getGrade() + " 입니다.\n");
+            System.out.println("몇 점으로 수정하시겠습니까? ");
+            int newScore = sc.nextInt();
+            if (newScore > 100 || newScore < 0) {
+                System.out.println("0~100점 사이로 입력하세요");
+                return;
+            }
+            System.out.println("과목의 타입을 입력하세요(MANDATORY or CHOICE)");
+            String type = sc.next();
+            if (!checkType(type)) {
+                System.out.println("과목의 타입을 제대로 입력하세요");
+                return;
+            }
+            bigScore.setScore(newScore);
+            bigScore.setGrade(returnGrade(type, newScore));
+            System.out.println("점수 : " + bigScore.getScore() + " 등급 : " + bigScore.getGrade() + " 입니다.");
+            return;
         }
     }
+
+
+
+
+
+
 
 
 
@@ -276,7 +236,7 @@ public class ManagementScore {
 
                 //test input data(브랜치 병합 시 삭제 예정)
                 students.add(new Student("st1", "수강생1", new String[]{"Java", "Spring"}));
-                scores.add(new Score("1", "st1", "SU1", 1, 100, "A"));
+                scores.add(new Score("1", "st1", "SU1", 1, 99, "A"));
                 scores.add(new Score("2", "st1", "SU1", 2, 50, "F"));
                 scores.add(new Score("3", "st1", "SU3", 1, 90, "B"));
                 scores.add(new Score("4", "st1", "SU3", 2, 80, "C"));
@@ -328,6 +288,23 @@ public class ManagementScore {
                 System.out.print("\n관리할 과목을 입력하시오 : ");
                 return sc.next();
             }
+    //필수,선택 입력을 체크하는 메서드
+    private static boolean checkType (String type) {
+        return type.equals("MANDATORY") || type.equals("CHOICE");
+    }
 
+    //학생 id,과목 id, round로 회차에 해당하는 특정 score객체 찾기.
+    public static Score getThatScore(String studentId,String subjectId,int round) {
+
+        for (Score score : scores) {
+            if (score.getSubjectId().equals(subjectId)&&score.getStudentId().equals(studentId)&&score.getRound()==round) {
+                return score;
+            }
         }
+
+        return null;
+    }
+
+
+}
 
