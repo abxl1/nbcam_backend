@@ -100,47 +100,43 @@ public class ManagementScore {
         System.out.print("\n등록할 회차를 입력하시오 (1~10) : ");
         int inputRound = sc.nextInt();
         if (inputRound < 1 || inputRound > 10) {
-            //유효한 입력값
+            System.out.println("유효한 입력값이 아닙니다.");
             return;
-
         }
         // 이미 등록한 회차일 경우 예외처리
-
-        // 4. 과목별로 점수 입력받기(사용자)
-//        for(String sub :studentSubjects ) {
-//            // 4 - 1 과목별로 점수 입력받기(사용자) , 과목별로 담을 변수를 담기
-//            System.out.println( sub + "의 점수를 입력하시오 (1~100) :");
-//            // 4 - 2 입력받은 점수가 어느 등급인지 계산
-//            // 4 - 3 입력받은 값으로 score인스턴스에 생성하기
+//        if(inputRound == 1){
+//            System.out.println("이미 등록된 회차입니다.");
+//
 //
 //        }
 
-
-
-
-
-
-
-
-
+//         4. 과목별로 점수 입력받기(사용자)
         System.out.println("시험 점수를 등록합니다...");
-        // 점수 인스턴스 생성 예시 코드
-        // Score score = new Score(CampManagementApp.sequence(CampManagementApp.INDEX_TYPE_SCORE), "학생ID","과목ID",1, 100, "A");
 
+        for(String sub :studentSubjects ) {
 
+            // 4 - 1 과목별로 점수 입력받기(사용자) , 과목별로 담을 변수를 담기
 
+            System.out.print( sub + "의 점수를 입력하시오 (1~100) :");
+            int score = sc.nextInt();
 
+            // 4 - 2 입력받은 점수가 어느 등급인지 계산
+            String subjectType = "";
+            String subjectId = "";
+            for(Subject subject : subjects){
+                if(subject.getSubjectName().equals(sub)) {
+                    subjectType = subject.getSubjectType();
+                    subjectId = subject.getSubjectId();
+                }
 
+            }
+            String grade = returnGrade(subjectType, score);
 
-
-
-
-
-
-
-
-
-
+            // 4 - 3 입력받은 값으로 score인스턴스에 생성하기
+            String scoreId = CampManagementApp.sequence(CampManagementApp.INDEX_TYPE_SCORE);
+             Score setScore = new Score(scoreId, studentId, subjectId, inputRound, score, grade );
+            scores.add(setScore);
+        }
         System.out.println("\n점수 등록 성공!");
     }
 
