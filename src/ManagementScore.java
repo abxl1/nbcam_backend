@@ -78,6 +78,15 @@ public class ManagementScore {
         }
         return "";
     }
+    //학생 id가 맞는지 체크하는 메서드
+    private static boolean checkStudentId (String studentId) {
+        for (Student student : students) {
+            if(student.getStudentId().equals(studentId)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     // 기능 구현 - 추종윤님
@@ -142,42 +151,54 @@ public class ManagementScore {
     // 수강생의 과목별 회차 점수 수정
     public static void updateRoundScoreBySubject() {
         String studentId = getInputStudentId();
-        //for문 학생숫자*50회 돌아감
-        for (int i = 0; i < CampManagementApp.scoreStore.size(); i++) {
-            Score bigScore = CampManagementApp.scoreStore.get(i);
-            //studentId 일치하는 학생 찾음 (50 개)
-            if (bigScore.getStudentId().equals(studentId)) {
-                String subjectId = getInputSubjectId();
 
-                //그중에 입력한 과목 id가 있는지 확인 없으면 안듣는거
-                //듣는다면 회차수 10개 만큼 나옴
-                if (bigScore.getSubjectId().equals(subjectId)) {
+        //for문 학생숫자*50회 돌아감
+        for (Score bigScore : scores) {
+
+            /*if (bigScore.getStudentId().equals(studentId)) {*/
+                //studentId 일치하는 학생 찾음 (50 개)
+            if(checkStudentId(studentId)){
+                String subName = getInputSubjectname();
+
+                if (isSubjectList(studentId, subName)) {
+            /*if (bigScore.getStudentId().equals(studentId)) {
+                String subjectId = getInputSubjectId();
+*/
+                    //그중에 입력한 과목 id가 있는지 확인 없으면 안듣는거
+                    //듣는다면 회차수 10개 만큼 나옴
+                    /*      if (bigScore.getSubjectId().equals(subjectId)) {*/
 
                     System.out.println("회차입력");
-                    Scanner sc2 = new Scanner(System.in);
-                    int round = sc2.nextInt();
+                    Scanner sc = new Scanner(System.in);
+                    int round = sc.nextInt();
 
-                    //과목 타입 체크!
+                    /*//과목 타입 체크!
                     String subjectType = "";
-                    for (int j = 0; j < CampManagementApp.subjectStore.size(); j++) {
-                        Subject check = CampManagementApp.subjectStore.get(i);
+                    for (int j = 0; j < subjects.size(); j++) {
+                        Subject check = subjects.get(i);
                         if (check.getSubjectId().equals(subjectId)) {
                             subjectType = check.getSubjectType();
                             break;
                         }
-                    }
+                    }*/
 
                     //10개중 해당 회차를 찾아서 들어가기
                     if (bigScore.getRound() == round) {
                         System.out.println("(점수, 등급)은 (" + bigScore.getScore() + ", " + bigScore.getGrade() + ")입니다.");
                         System.out.println("");
-                        System.out.println("몇 점으로 수정하시겠습니까?");
-                        Scanner sc3 = new Scanner(System.in);
-                        int newScore = sc2.nextInt();
+                        System.out.println("몇 점으로 수정하시겠습니까? ");
+                        int newScore = sc.nextInt();
+                        System.out.println("과목의 타입을 입력하세요(MANDATORY or CHOICE)");
+                        String type = sc.next();
 
                         //0<=점수<=100 인지 확인
                         if (0 <= newScore && newScore <= 100) {
+                            bigScore.setGrade(returnGrade(type, newScore));
                             bigScore.setScore(newScore);
+                            System.out.println(newScore + " / " + bigScore.getGrade() + " 로 변경되었습니다. ");
+                            break;
+
+                           /* bigScore.setScore(newScore);
 
                             if (subjectType.equals("필수")) {
                                 if (95 <= newScore) {
@@ -219,27 +240,33 @@ public class ManagementScore {
                                     bigScore.setGrade("F");
                                     System.out.println(newScore + " / " + subjectType + " / " + bigScore.getGrade() + " 로 변경되었습니다. ");
                                 }
-                            }
+                            }*/
                         } else {
                             System.out.println("점수값을 0~100사이로 입력하세요");
+                            break;
                         }
                     } else {
                         System.out.println("해당 회차가 없습니다.");
+                        break;
                     }
                 } else {
-                    System.out.println("과목ID에 해당하는 과목이 없습니다.");
+                    System.out.println("해당하는 과목이 없습니다.");
+                    break;
                 }
-            } else {
+
+            }else {
                 System.out.println("학생Id에 해당하는 정보가 없습니다.");
+                break;
             }
-
         }
-
     }
+
+
+
 
     // 기능 구현 - 한지은
     // 수강생의 특정 과목 회차별 등급 조회
-    public static void inquireRoundGradeBySubject() {
+    public static void inquireRoundGradeBySubject () {
 
         //test input data(브랜치 병합 시 삭제 예정)
         students.add(new Student("st1", "수강생1", new String[]{"Java", "Spring"}));
@@ -248,8 +275,12 @@ public class ManagementScore {
         scores.add(new Score("3", "st1", "SU3", 1, 90, "B"));
         scores.add(new Score("4", "st1", "SU3", 2, 80, "C"));
 
-        // 조회할 수강생 ID 입력받기
+        // 조회할 수강생 ID 입력받고 등록여부 체크
         String studentId = getInputStudentId();
+        if (!checkStudentId(studentId)) {
+            System.out.println("등록되지 않은 수강생입니다.");
+            return;
+        }
 
         // 입력받은 수강생 ID로 등록된 점수(Score) 여부 체크
         if (getStudentScores(studentId).isEmpty()) {
@@ -265,30 +296,36 @@ public class ManagementScore {
         // 입력받은 과목명이 수강생의 수강중인 과목에 포함되어있는지 체크
         boolean includeSubject = isSubjectList(studentId, subjectName);
 
-        if(includeSubject){   // 수강중인 과목일 경우
+        if (includeSubject) {   // 수강중인 과목일 경우
             // 과목 ID 얻기
             String subjectId = getSubjectId(subjectName);
 
             // 수강생의 점수 목록 중 과목 ID가 일치하는 점수 출력
             System.out.println("회차별 등급을 조회합니다...");
-            for(Score score : getStudentScores(studentId)){
-                if (score.getSubjectId().equals(subjectId)){
+            for (Score score : getStudentScores(studentId)) {
+                if (score.getSubjectId().equals(subjectId)) {
                     System.out.println("회차 = " + score.getRound() + " | 점수 = " + score.getScore() + " | 등급 = " + score.getGrade());
                 }
             }
             System.out.println("등급 조회 성공!");
 
-        }else { // 수강중인 과목이 아닐경우
+        } else { // 수강중인 과목이 아닐경우
             System.out.println("수강 중인 과목이 아닙니다.");
         }
 
     }
 
 
-    private static String getInputSubjectId() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("\n관리할 과목의 번호를 입력하시오 : ");
-        return sc.next();
-    }
+            private static String getInputSubjectId() {
+                Scanner sc = new Scanner(System.in);
+                System.out.print("\n관리할 과목의 번호를 입력하시오 : ");
+                return sc.next();
+            }
+            private static String getInputSubjectname() {
+                Scanner sc = new Scanner(System.in);
+                System.out.print("\n관리할 과목을 입력하시오 : ");
+                return sc.next();
+            }
 
-}
+        }
+
