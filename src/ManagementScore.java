@@ -88,9 +88,9 @@ public class ManagementScore {
         String studentId = getInputStudentId();
 
         // 2. 해당 수강생 ID를 가진 수강생 찾기와 과목 등록
-        String[] studentSubjects= {};
-        for(Student student : students) {
-            if(student.getStudentId().equals(studentId)) { //학생비교
+        String[] studentSubjects = {};
+        for (Student student : students) {
+            if (student.getStudentId().equals(studentId)) { //학생비교
                 studentSubjects = student.getSubjects();  //수강목록을 가져오기
             }
         }
@@ -106,9 +106,7 @@ public class ManagementScore {
         // 이미 등록한 회차일 경우 예외처리
 //        if(inputRound == 1){
 //            System.out.println("이미 등록된 회차입니다.");
-//
-//
-//        }
+//      }
 
 //         4. 과목별로 점수 입력받기(사용자)
         System.out.println("시험 점수를 등록합니다...");
