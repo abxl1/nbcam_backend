@@ -49,28 +49,54 @@ public class ManagementStudent {
         // 학생 객체 생성하여 저장
         String seq = CampManagementApp.sequence(CampManagementApp.INDEX_TYPE_STUDENT);
         Student input = new Student(seq, studentName, subjects);
-
         CampManagementApp.studentStore.add(input);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         System.out.println("수강생 등록 성공!\n");
     }
+
+    // 수강생 상태 등록 메서드
+    public static void createStudentStatus(){
+        System.out.println("==================================");
+        System.out.println("수강생의 상태등록 실행중...");
+        System.out.println("상태를 등록할 수강생의 고유번호를 입력해주세요 : ");
+        Scanner sc = new Scanner(System.in);
+        String studentId = sc.next();
+        sc.nextLine();
+        boolean found = false;
+
+        // 수강생 객체에 접근
+        for(Student st : CampManagementApp.studentStore){
+            if(st.getStudentId().equals(studentId)){
+                st.setStudentStatus();
+                System.out.println("수강생 상태 등록을 완료했습니다.");
+                System.out.println(st.getStudentId() + " " + st.getStudentName()
+                        + " 수강생의 상태는 " + st.getStudentStatus() + "입니다.");
+                found = true;
+                break;
+            }
+        }
+        if(!found){
+            System.out.println("등록되지않은 수강생입니다, 수강생 관리 화면으로 돌아갑니다.");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // 기능 구현 - 김나영님
     // 등록된 수강생 목록 조회 ( 전체 조회 or 상태별 조회 )
