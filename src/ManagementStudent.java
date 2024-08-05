@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 // 수강생 관리 클래스
 public class ManagementStudent {
+    // 스캐너
     static Scanner sc = new Scanner(System.in);
 
     // 기능 구현 - 강동준님
@@ -102,6 +103,8 @@ public class ManagementStudent {
     // 등록된 수강생 목록 조회 ( 전체 조회 or 상태별 조회 )
     public static void inquireStudent() {
         boolean flag = true;
+        boolean found = false;
+
         while (flag) {
 
             String newStudentId; // 수강생 아이디
@@ -113,6 +116,7 @@ public class ManagementStudent {
             System.out.println("수강생 목록 조회 프로그램 실행 중...");
             System.out.println("1. 전체 수강생 목록");
             System.out.println("2. 상태별 수강생 목록");
+            System.out.println("3. 이전으로");
             System.out.print("조회 항목을 선택하세요 : ");
             int input = sc.nextInt();
 
@@ -122,41 +126,48 @@ public class ManagementStudent {
                 case 1 -> {
                     System.out.println("\n수강생 목록을 조회합니다...");
 
-                    // 전체 수강생 출력
-                    for (Student student : CampManagementApp.studentStore) {
-                        newStudentId = student.getStudentId();
-                        newStudentName = student.getStudentName();
-                        newStudentStatus = student.getStudentStatus();
-                        newSubjects = student.getSubjects();
+                    // 전체 수강생 목록이 비었다면 예외처리
+                    if (!CampManagementApp.studentStore.isEmpty()) {
 
-                        System.out.println("학생 고유번호 : " + newStudentId + " / 이름 : " + newStudentName + " / 상태 : " + newStudentStatus + " / 선택과목명 : " + Arrays.toString(newSubjects));
+                        // 전체 수강생 출력
+                        for (Student student : CampManagementApp.studentStore) {
+                            newStudentId = student.getStudentId();
+                            newStudentName = student.getStudentName();
+                            newStudentStatus = student.getStudentStatus();
+                            newSubjects = student.getSubjects();
+
+                            System.out.println("학생 고유번호 : " + newStudentId + " / 이름 : " + newStudentName + " / 상태 : " + newStudentStatus + " / 선택과목명 : " + Arrays.toString(newSubjects));
+                        }
                         System.out.println("\n전체 수강생 목록 조회 성공!");
+                    } else {
+                        System.out.println();
+                        System.out.println("등록된 수강생이 없습니다.");
                     }
+                    return;
                 }
 
                 // 상태별 수강생 목록 조회
                 case 2 -> {
                     System.out.println("\n상태별 수강생 목록을 조회합니다...");
                     System.out.println();
-
-                    System.out.println("==================================");
-                    System.out.println("상태별 수강생 목록 조회 프로그램 실행 중...");
                     System.out.println("1. Green");
                     System.out.println("2. Red");
                     System.out.println("3. Yellow");
-                    System.out.print("상태 항목을 선택하세요 : ");
+                    System.out.print("항목을 선택하세요 : ");
                     input = sc.nextInt();
 
+                    // 조회할 상태 선택
                     String status = switch (input) {
                         case 1 -> "Green";
                         case 2 -> "Red";
                         case 3 -> "Yellow";
                         default -> {
-                            System.out.println("잘못된 입력입니다.\n뒤로 이동...");
+                            System.out.println("잘못된 입력입니다.");
                             flag = false;
                             yield "Invalid";
                         }
                     };
+                    System.out.println();
 
                     // 상태별 수강생 목록 출력
                     for (Student student : CampManagementApp.studentStore) {
@@ -164,17 +175,24 @@ public class ManagementStudent {
                             newStudentId = student.getStudentId();
                             newStudentName = student.getStudentName();
                             System.out.println("학생 고유번호 : " + newStudentId + " / 이름 : " + newStudentName);
-                            System.out.println();
-                            System.out.println(status +"\n상태별 수강생 목록 조회 성공!");
+                            found = true;
                         }
                     }
-                }
-            }
 
-            // 등록된 수강생 없을 때 예외처리
-            if (CampManagementApp.studentStore.isEmpty()) {
-                System.out.println();
-                System.out.println("등록된 수강생이 없습니다.");
+                    // 특정 상태에 지정된 수강생이 비었다면 예외처리
+                    if(!found){
+                        System.out.println(status + " 상태에 지정된 수강생이 없습니다.");
+                    } else {
+                        System.out.println(status +" 상태의 수강생 목록 조회 성공!");
+                    }
+                }
+
+                case 3 -> { flag = false; }
+
+                default -> {
+                    System.out.println("잘못된 입력입니다. 다시 선택해 주세요.");
+                    flag = false;
+                }
             }
         }
     }
