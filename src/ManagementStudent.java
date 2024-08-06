@@ -14,59 +14,72 @@ public class ManagementStudent {
     // 기능 구현 - 강동준님
     // 수강생 등록
     public static void createStudent() {
-//        Scanner sc = new Scanner(System.in);
         boolean vaildInput = false;
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력(한글만입력가능): ");
-        String studentName = sc.next();
-        sc.nextLine();
-        while (!vaildInput){
-            if(studentName.matches("^[가-힣]+$")){
-                vaildInput = true;
-            }else {
-                System.out.println("유효하지 않은 입력입니다. 이름은 한글로만 입력해주세요.");
-                studentName = sc.next();
-                sc.nextLine();
-                }
-            }
+        String studentName = Student.inputName();
+        ManagementStudent ms = new ManagementStudent();
+        String[] subjects = ms.inputSubject();
 
-
-    // 코드를 입력받아 과목명으로 저장
-        for(Subject subject : CampManagementApp.subjectStore){
-            System.out.println(subject.getSubjectId()+" "+subject.getSubjectName());
-        }
-        System.out.print("수강 과목 코드입력[,로 구분 뛰어쓰기 없이 입력해 주세요 ex)SU1,SU2...]: \n");
-
-        String[] subjectsCode = sc.nextLine().split(",");
-        String[] subjects = new String[subjectsCode.length];
-        for (int i = 0; i < subjectsCode.length; i++) {
-            for (Subject subject : CampManagementApp.subjectStore) {
-                if (subjectsCode[i].equals(subject.getSubjectId())) {
-                    subjects[i] = subject.getSubjectName();
-                }
-            }
-        }
-
-        // 학생 객체 생성하여 저장
         String seq = CampManagementApp.sequence(CampManagementApp.INDEX_TYPE_STUDENT);
         Student input = new Student(seq, studentName, subjects);
         CampManagementApp.studentStore.add(input);
         System.out.println("수강생 등록 성공!\n");
     }
 
+    // 코드를 입력받아 과목명으로 저장
+    public String[] inputSubject(){
+        Scanner sc = new Scanner(System.in);
+        boolean found = false;
+        for(Subject subject : CampManagementApp.subjectStore){
+            System.out.println(subject.getSubjectId()+" "+subject.getSubjectName());
+        }
+        System.out.print("수강 과목 코드입력[,로 구분 뛰어쓰기 없이 대문자로 정확히 입력해 주세요 ex)SU1,SU2...]: \n");
+
+        String[] subjectsCode = sc.nextLine().split(",");
+        String[] subjects = new String[subjectsCode.length];
+
+        for (String code : subjectsCode) {
+            found = false;
+            for (Subject subject : CampManagementApp.subjectStore){
+                if(code.equals(subject.getSubjectId())){
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                break;
+            }
+        }
+        if(!found){
+            System.out.println("잘못된 과목 코드를 입력했습니다, 다시 입력해주세요");
+            inputSubject();
+        }else{
+            for (int i = 0; i < subjectsCode.length; i++) {
+                for (Subject subject : CampManagementApp.subjectStore) {
+                    if (subjectsCode[i].equals(subject.getSubjectId())) {
+                        subjects[i] = subject.getSubjectName();
+                    }
+                }
+            }
+        }
+        return subjects;
+    }
+
+
     // 수강생 상태 등록 메서드
     public static void createStudentStatus(){
         System.out.println("==================================");
         System.out.println("수강생의 상태등록 실행중...");
-        System.out.println("상태를 등록할 수강생의 고유번호를 입력해주세요 : ");
+        System.out.println("상태를 등록할 수강생의 이름을 입력해주세요 : ");
         Scanner sc = new Scanner(System.in);
-        String studentId = sc.next();
+        String studentName = sc.next();
         sc.nextLine();
         boolean found = false;
 
         // 수강생 객체에 접근
         for(Student st : CampManagementApp.studentStore){
-            if(st.getStudentId().equals(studentId)){
+            if(studentName.equals(st.getStudentName())){
                 st.setStudentStatus();
                 System.out.println("수강생 상태 등록을 완료했습니다.");
                 System.out.println(st.getStudentId() + " " + st.getStudentName()
@@ -79,6 +92,37 @@ public class ManagementStudent {
             System.out.println("등록되지않은 수강생입니다, 수강생 관리 화면으로 돌아갑니다.");
         }
     }
+
+    // 수강생 정보(이름, 상태) 수정 메서드
+    public static void changeStudent(){
+        System.out.println("==================================");
+        System.out.println("수강생 정보 수정 실행중...");
+        System.out.println("정보(이름, 상태)를 수정 할 수강생의 이름을 입력하세요 : ");
+        Scanner sc = new Scanner(System.in);
+        String studentName = sc.next();
+        sc.nextLine();
+        boolean found = false;
+
+        for(Student st : CampManagementApp.studentStore) {
+            if (st.getStudentName().equals(studentName)) {
+                found = true;
+                System.out.println("수정 할 내용을 선택하세요.");
+                System.out.println("1. 수강생 이름 수정");
+                System.out.println("2. 수강생 상태 수정");
+                int input = sc.nextInt();
+
+                switch (input) {
+                    case 1 -> st.changeName(); // 수강생 이름 수정
+                    case 2 -> st.changeStatus(); // 수강생 상태 수정
+                }
+            }
+        }
+
+        if(!found){
+            System.out.println("등록되지않은 수강생입니다, 수강생 관리 화면으로 돌아갑니다.");
+        }
+    }
+
 
 
 
