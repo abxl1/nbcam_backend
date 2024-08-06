@@ -33,17 +33,26 @@ public class ManagementStudent {
         Scanner sc = new Scanner(System.in);
         boolean found = false;
         for(Subject subject : CampManagementApp.subjectStore){
-            System.out.println(subject.getSubjectId()+" "+subject.getSubjectName());
+            System.out.println(subject.getSubjectId()+" "+subject.getSubjectName()+" "+subject.getSubjectType());
         }
         System.out.print("수강 과목 코드입력[,로 구분 뛰어쓰기 없이 대문자로 정확히 입력해 주세요 ex)SU1,SU2...]: \n");
+        System.out.println("최소 필수(MANDATORY)과목 3개이상, 선택(CHOICE)과목 2개이상을 선택해야합니다.");
 
         String[] subjectsCode = sc.nextLine().split(",");
         String[] subjects = new String[subjectsCode.length];
+
+        int mandatory = 0;
+        int choice = 0;
 
         for (String code : subjectsCode) {
             found = false;
             for (Subject subject : CampManagementApp.subjectStore){
                 if(code.equals(subject.getSubjectId())){
+                    if(subject.getSubjectType().equals("MANDATORY")){
+                        mandatory++;
+                    }else {
+                        choice++;
+                    }
                     found = true;
                     break;
                 }
@@ -52,17 +61,24 @@ public class ManagementStudent {
                 break;
             }
         }
+
         if(!found){
             System.out.println("잘못된 과목 코드를 입력했습니다, 다시 입력해주세요");
             return inputSubject();
         }else{
-            for (int i = 0; i < subjectsCode.length; i++) {
-                for (Subject subject : CampManagementApp.subjectStore) {
-                    if (subjectsCode[i].equals(subject.getSubjectId())) {
-                        subjects[i] = subject.getSubjectName();
+            if(mandatory >= 3 && choice >= 2){
+                for (int i = 0; i < subjectsCode.length; i++) {
+                    for (Subject subject : CampManagementApp.subjectStore) {
+                        if (subjectsCode[i].equals(subject.getSubjectId())) {
+                            subjects[i] = subject.getSubjectName();
+                        }
                     }
                 }
+            }else{
+                System.out.println("최소 필수 과목 3개 이상, 선택 과목 2개 이상을 선택해주세요");
+                return inputSubject();
             }
+
         }
         return subjects;
     }
