@@ -30,29 +30,29 @@ public class ManagementScore {
     private static String returnGrade(String type, int score) {
         String grade = "";
         //필수 과목인지 선택과목인지
-        if(type.equals(CampManagementApp.SUBJECT_TYPE_MANDATORY)) {
+        if (type.equals(CampManagementApp.SUBJECT_TYPE_MANDATORY)) {
             //필수 과목일 경우 등급계산
-            if(95 <= score ) grade = "A";
-            else if(90 <= score && score < 95 ) grade = "B";
-            else if(80 <= score && score < 90 ) grade = "C";
-            else if(70 <= score && score < 80 ) grade = "D";
-            else if(60 <= score && score < 70 ) grade = "F";
+            if (95 <= score) grade = "A";
+            else if (90 <= score && score < 95) grade = "B";
+            else if (80 <= score && score < 90) grade = "C";
+            else if (70 <= score && score < 80) grade = "D";
+            else if (60 <= score && score < 70) grade = "F";
             else grade = "N";
 
         } else {
             //선택 과목일 경우 등급계산
-            if(90 <=score ) grade = "A";
-            else if(80 <= score && score < 90 ) grade = "B";
-            else if(70 <= score && score < 80 ) grade = "C";
-            else if(60 <= score && score < 75 ) grade = "D";
-            else if(50 <= score && score < 60 ) grade = "F";
+            if (90 <= score) grade = "A";
+            else if (80 <= score && score < 90) grade = "B";
+            else if (70 <= score && score < 80) grade = "C";
+            else if (60 <= score && score < 75) grade = "D";
+            else if (50 <= score && score < 60) grade = "F";
             else grade = "N";
         }
         return grade;
     }
 
     // 입력받은 수강생 id의 점수(Score)목록을 반환하는 메서드
-    private static List<Score> getStudentScores (String studentId) {
+    private static List<Score> getStudentScores(String studentId) {
         List<Score> studentScores = new ArrayList<>();
         for (Score score : scores) {
             if (studentId.equals(score.getStudentId())) {
@@ -63,9 +63,9 @@ public class ManagementScore {
     }
 
     // 과목명(subjectName)이 수강생(studentId)의 수강중인 과목인지 체크하는 메서드
-    private static boolean isSubjectList (String studentId, String subjectName) {
+    private static boolean isSubjectList(String studentId, String subjectName) {
         for (Student student : students) {
-            if(student.getStudentId().equals(studentId) && Arrays.asList(student.getSubjects()).contains(subjectName)) {
+            if (student.getStudentId().equals(studentId) && Arrays.asList(student.getSubjects()).contains(subjectName)) {
                 return true;
             }
         }
@@ -73,7 +73,7 @@ public class ManagementScore {
     }
 
     // 입력받은 과목명으로 과목 ID를 얻는 메서드.
-    private static String getSubjectId (String subjectName) {
+    private static String getSubjectId(String subjectName) {
         for (Subject subject : subjects) {
             if (subject.getSubjectName().equals(subjectName)) {
                 return subject.getSubjectId();
@@ -83,9 +83,9 @@ public class ManagementScore {
     }
 
     // 등록 된 학생 id가 맞는지 체크하는 메서드
-    private static boolean checkStudentId (String studentId) {
+    private static boolean checkStudentId(String studentId) {
         for (Student student : students) {
-            if(student.getStudentId().equals(studentId)) {
+            if (student.getStudentId().equals(studentId)) {
                 return true;
             }
         }
@@ -93,10 +93,10 @@ public class ManagementScore {
     }
 
     // 과목타입(필수,선택)을 체크하는 메서드
-    private static boolean checkType (String subjectId,String type) {
-        for(Subject subject : subjects){
-            if(subject.getSubjectId().equals(subjectId)){
-                if(subject.getSubjectType().equals(type)){
+    private static boolean checkType(String subjectId, String type) {
+        for (Subject subject : subjects) {
+            if (subject.getSubjectId().equals(subjectId)) {
+                if (subject.getSubjectType().equals(type)) {
                     return true;
                 }
             }
@@ -107,7 +107,7 @@ public class ManagementScore {
     //학생 id,과목 id, round를 받아 해당하는 특정 score객체를 반환하는 메서드
     private static Score getThatScore(String studentId, String subjectId, int round) {
         for (Score score : scores) {
-            if (score.getSubjectId().equals(subjectId)&&score.getStudentId().equals(studentId)&&score.getRound()==round) {
+            if (score.getSubjectId().equals(subjectId) && score.getStudentId().equals(studentId) && score.getRound() == round) {
                 return score;
             }
         }
@@ -139,22 +139,26 @@ public class ManagementScore {
         System.out.print("\n등록할 회차를 입력하시오 (1~10) : ");
         int inputRound = sc.nextInt();
         if (inputRound < 1 || inputRound > 10) {
-            //유효한 입력값
+            System.out.println("1~10 사이로 입력하세요.");
             return;
         }
 
         System.out.println("시험 점수를 등록합니다...");
-        for(String sub :studentSubjects ) {
+        for (String sub : studentSubjects) {
 
             // 4 - 1 과목별로 점수 입력받기(사용자) , 과목별로 담을 변수를 담기
-            System.out.print( sub + "의 점수를 입력하시오 (1~100) :");
+            System.out.print(sub + "의 점수를 입력하시오 (1~100) :");
             int score = sc.nextInt();
+            if (score < 1 || score > 100) {
+                System.out.println("1~100 사이로 입력하세요.");
+                return;
+            }
 
             // 4 - 2 입력받은 점수가 어느 등급인지 계산
             String subjectType = "";
             String subjectId = "";
-            for(Subject subject : subjects){
-                if(subject.getSubjectName().equals(sub)) {
+            for (Subject subject : subjects) {
+                if (subject.getSubjectName().equals(sub)) {
                     subjectType = subject.getSubjectType();
                     subjectId = subject.getSubjectId();
                 }
@@ -163,7 +167,7 @@ public class ManagementScore {
 
             // 4 - 3 입력받은 값으로 score인스턴스에 생성하기
             String scoreId = CampManagementApp.sequence(CampManagementApp.INDEX_TYPE_SCORE);
-             Score setScore = new Score(scoreId, studentId, subjectId, inputRound, score, grade );
+            Score setScore = new Score(scoreId, studentId, subjectId, inputRound, score, grade);
             scores.add(setScore);
         }
         System.out.println("\n점수 등록 성공!");
@@ -189,10 +193,10 @@ public class ManagementScore {
             return;
         }
         String subjectId = getSubjectId(subName);
-        while(true){
-            int round =0;
+        while (true) {
+            int round = 0;
 
-            while(true) {
+            while (true) {
                 try {
                     System.out.println("회차입력");
                     Scanner sc = new Scanner(System.in);
@@ -216,18 +220,22 @@ public class ManagementScore {
                 }
             }
 
-            if(bigScore == null){continue;}
+            if (bigScore == null) {
+                continue;
+            }
 
             System.out.println("점수 : " + bigScore.getScore() + " 등급 : " + bigScore.getGrade() + " 입니다.\n");
             int newScore = 0;
-            while(true) {
+            while (true) {
                 try {
                     System.out.println("몇 점으로 수정하시겠습니까? ");
                     Scanner sc = new Scanner(System.in);
                     newScore = sc.nextInt();
-                    if (0<=newScore && newScore <= 100) {
+                    if (0 <= newScore && newScore <= 100) {
                         break;
-                    }else{System.out.println("0~100점 사이로 입력하세요");}
+                    } else {
+                        System.out.println("0~100점 사이로 입력하세요");
+                    }
 
                 } catch (InputMismatchException e) {
                     System.out.println("정수를 입력해주세요");
@@ -235,16 +243,17 @@ public class ManagementScore {
             }
 
 
-
             String type = "";
-            while(true) {
+            while (true) {
                 System.out.println("과목의 타입을 입력하세요(MANDATORY or CHOICE)");
                 Scanner sc = new Scanner(System.in);
                 type = sc.next();
 
                 if (!checkType(subjectId, type)) {
                     System.out.println("과목의 타입을 제대로 입력하세요");
-                }else{break;}
+                } else {
+                    break;
+                }
             }
             bigScore.setScore(newScore);
             bigScore.setGrade(returnGrade(type, newScore));
@@ -257,10 +266,9 @@ public class ManagementScore {
     }
 
 
-
     // 기능 구현 - 한지은
     // 수강생의 특정 과목 회차별 등급 조회
-    public void inquireRoundGradeBySubject () {
+    public void inquireRoundGradeBySubject() {
 
         // 조회할 수강생 ID 입력받고 등록여부 체크
         String studentId = getInputStudentId();
@@ -318,18 +326,20 @@ public class ManagementScore {
         }
 
         // 과목별 평균 등급 조회
-        for(Subject subject : subjects){
-            int sumScore=0, avgScore=0, index=0;
+        for (Subject subject : subjects) {
+            int sumScore = 0, avgScore = 0, index = 0;
             for (Score score : getStudentScores(studentId)) {   // 해당 수강생의 점수목록을 전부 순회
                 if (score.getSubjectId().equals(subject.getSubjectId())) {
                     sumScore += score.getScore();
                     index++;
                 }
             }
-            if (index==0) {continue;}
+            if (index == 0) {
+                continue;
+            }
             avgScore = sumScore / index; // 과목별 평균점수(총합점수/회차)
             String avgGrade = returnGrade(subject.getSubjectName(), avgScore); // 과목타입, 평균 점수 넣어서 등급 받기
-            System.out.println("과목= "+subject.getSubjectName()+" | 평균점수= "+avgScore+" | 평균등급= "+avgGrade);
+            System.out.println("과목= " + subject.getSubjectName() + " | 평균점수= " + avgScore + " | 평균등급= " + avgGrade);
         }
         System.out.println("과목별 평균등급 조회 성공!");
     }
