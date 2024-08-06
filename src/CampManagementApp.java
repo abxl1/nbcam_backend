@@ -28,8 +28,8 @@ public class CampManagementApp {
     static Scanner sc = new Scanner(System.in);
 
     // 관리클래스 객체
-    static ManagementScore managementScore = new ManagementScore();
-    static ManagementStudent managementStudent = new ManagementStudent();
+    static ManagementScore managementScore;
+    static ManagementStudent managementStudent;
 
     public static void main(String[] args) {
         setInitData();
@@ -113,6 +113,10 @@ public class CampManagementApp {
     }
 
     private static void displayMainView() throws InterruptedException {
+        // 관리 클래스 객체생성
+        managementStudent = new ManagementStudent();
+        managementScore = new ManagementScore();
+
         boolean flag = true;
         while (flag) {
             System.out.println("\n==================================");

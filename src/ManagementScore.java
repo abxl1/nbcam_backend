@@ -117,6 +117,10 @@ public class ManagementScore {
 
         // 1.점수 등록할 사람 id입력받기 (저장)
         String studentId = getInputStudentId();
+        if (!checkStudentId(studentId)) {
+            System.out.println("등록되지 않은 수강생입니다.");
+            return;
+        }
 
         // 2. 해당 수강생 ID를 가진 수강생 찾기와 과목 등록
         String[] studentSubjects = {};
@@ -222,13 +226,6 @@ public class ManagementScore {
     // 기능 구현 - 한지은
     // 수강생의 특정 과목 회차별 등급 조회
     public void inquireRoundGradeBySubject () {
-
-        //test input data(브랜치 병합 시 삭제 예정)
-        students.add(new Student("st1", "수강생1", new String[]{"Java", "Spring"}));
-        scores.add(new Score("1", "st1", "SU1", 1, 100, "A"));
-        scores.add(new Score("2", "st1", "SU1", 2, 50, "F"));
-        scores.add(new Score("3", "st1", "SU3", 1, 90, "B"));
-        scores.add(new Score("4", "st1", "SU3", 2, 80, "C"));
 
         // 조회할 수강생 ID 입력받고 등록여부 체크
         String studentId = getInputStudentId();
