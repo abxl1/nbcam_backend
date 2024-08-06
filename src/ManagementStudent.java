@@ -54,7 +54,7 @@ public class ManagementStudent {
         }
         if(!found){
             System.out.println("잘못된 과목 코드를 입력했습니다, 다시 입력해주세요");
-            inputSubject();
+            return inputSubject();
         }else{
             for (int i = 0; i < subjectsCode.length; i++) {
                 for (Subject subject : CampManagementApp.subjectStore) {
