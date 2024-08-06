@@ -334,5 +334,56 @@ public class ManagementScore {
         System.out.println("과목별 평균등급 조회 성공!");
     }
 
+    //기능구현 - 정승헌
+    //특정 상태 수강생들의 필수 과목 평균 등급을 조회합니다
+    public void inquireSpecificGradeAvg(){
+
+        String status = getInputStudentStatus();
+        int index =0;
+        int sum = 0;
+        for(Student student:students){
+            if(student.getStudentStatus().equals(status)){
+                String studentIdStatus = student.getStudentId();//student중 해당 status가진 학생 id 찾기
+
+                for(Score score:scores){
+                    if(score.getScoreId().equals(studentIdStatus)) {//score중에 해당 studentid가진 객체찾기
+                        String subjectIdStatus=score.getSubjectId();//그 객체들의 과목 id찾기
+                        for(Subject subject:subjects){
+                            if(subject.getSubjectId().equals(subjectIdStatus)){
+                                if(subject.getSubjectType().equals("MANDATORY")){//subject에서 과목이 필수과목인지 체크
+                                    sum+=score.getScore();
+                                    index +=1;
+                                }
+                            }
+                        }
+                    }
+                }
+                int avg = (sum/index);
+                String avgGrade = returnGrade("MANDATORY",avg);
+                System.out.println("학생 : " + student.getStudentName() + " 필수과목 등급 : " +avg);
+            }
+        }
+
+    }
+
+
+
+
+    //상태 입력받고 확인까지
+    private static String getInputStudentStatus() {
+        while(true){
+              Scanner sc = new Scanner(System.in);
+              System.out.print("\n관리할 수강생의 상태를 입력하시오 : (Green, Red, Yellow)");
+              String status= sc.next();
+                for(Student student:students){
+                    if(student.getStudentStatus().equals(status)){
+                        return status;
+                    }else {
+                        System.out.println("해당 상태의 수강생이 없습니다.다시 입력하세요.");
+                    }
+                }
+
+            }
+        }
 }
 
