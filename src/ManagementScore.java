@@ -349,51 +349,67 @@ public class ManagementScore {
     public void inquireSpecificGradeAvg(){
 
         String status = getInputStudentStatus();
-        int index =0;
-        int sum = 0;
-        for(Student student:students){
-            if(student.getStudentStatus().equals(status)){
-                String studentIdStatus = student.getStudentId();//student중 해당 status가진 학생 id 찾기
+        if(!isInputStudentStatus(status)){
+            System.out.println("해당 상태의 수강생이 없습니다.");
+        }
 
-                for(Score score:scores){
-                    if(score.getScoreId().equals(studentIdStatus)) {//score중에 해당 studentid가진 객체찾기
-                        String subjectIdStatus=score.getSubjectId();//그 객체들의 과목 id찾기
-                        for(Subject subject:subjects){
-                            if(subject.getSubjectId().equals(subjectIdStatus)){
-                                if(subject.getSubjectType().equals("MANDATORY")){//subject에서 과목이 필수과목인지 체크
-                                    sum+=score.getScore();
-                                    index +=1;
-                                }
+        int sum=0;
+        int count=0;
+        for (Student student : students) {
+            if (student.getStudentStatus().equals(status)) {//특정 상태의 학생찾기
+
+                String studentId = student.getStudentId();//특정학생의 studentid 찾기
+
+                for (Score score : scores) {
+                    if (score.getStudentId().equals(studentId)) { //해당 studentid에 해당하는 score찾기
+                        String subjectId = score.getSubjectId();//score에 subjectid 찾기
+
+                        for (Subject subject : subjects) {
+                            if (subject.getSubjectId().equals(subjectId) &&
+                                    subject.getSubjectType().equals("MANDATORY")) { // 과목이 필수과목인지 찾기
+                                sum += score.getScore();//필수과목이면 점수값들 더해주기
+                                count++;
                             }
                         }
+
                     }
                 }
-                int avg = (sum/index);
-                String avgGrade = returnGrade("MANDATORY",avg);
-                System.out.println("학생 : " + student.getStudentName() + " 필수과목 등급 : " +avg);
+                if (count > 0) {
+                    int avg = sum / count;
+                    String avgGrade = returnGrade("MANDATORY", avg);
+                    System.out.println("학생 : " + student.getStudentName() + "/ 필수과목 등급 : " + avgGrade);
+                    System.out.println("==========================");
+                }
+
             }
         }
+
 
     }
 
 
 
 
-    //상태 입력받고 확인까지
-    private static String getInputStudentStatus() {
-        while(true){
-              Scanner sc = new Scanner(System.in);
-              System.out.print("\n관리할 수강생의 상태를 입력하시오 : (Green, Red, Yellow)");
-              String status= sc.next();
-                for(Student student:students){
-                    if(student.getStudentStatus().equals(status)){
-                        return status;
-                    }else {
-                        System.out.println("해당 상태의 수강생이 없습니다.다시 입력하세요.");
-                    }
-                }
+    //상태 입력받고
+    private String getInputStudentStatus() {
 
+        Scanner sc = new Scanner(System.in);
+        System.out.print("관리할 수강생의 상태를 입력하시오(Green, Red, Yellow) : ");
+        return sc.next();
+
+    }
+
+    private boolean isInputStudentStatus(String status){
+        for(Student student:students){
+            if(student.getStudentStatus().equals(status)){
+                return true;
             }
         }
+        return false;
+    }
+
+
+
+
 }
 
