@@ -54,7 +54,7 @@ public class ManagementStudent {
         }
         if(!found){
             System.out.println("잘못된 과목 코드를 입력했습니다, 다시 입력해주세요");
-            inputSubject();
+            return inputSubject();
         }else{
             for (int i = 0; i < subjectsCode.length; i++) {
                 for (Subject subject : CampManagementApp.subjectStore) {
@@ -188,10 +188,9 @@ public class ManagementStudent {
 
 
     // 기능 구현 - 김나영님
-    // 등록된 수강생 목록 조회 ( 전체 조회 or 상태별 조회 )
+    // 등록된 수강생 조회 ( 수강생 조회 / 전체 수강생 목록 조회 / 상태별 수강생 목록 조회 )
     public void inquireStudent() {
         boolean flag = true;
-        boolean found = false;
 
         while (flag) {
 
@@ -201,17 +200,41 @@ public class ManagementStudent {
             String[] newSubjects; // 수강생 선택 과목
 
             System.out.println("==================================");
-            System.out.println("수강생 목록 조회 프로그램 실행 중...");
-            System.out.println("1. 전체 수강생 목록");
-            System.out.println("2. 상태별 수강생 목록");
-            System.out.println("3. 이전으로");
+            System.out.println("수강생 조회 프로그램 실행 중...");
+            System.out.println("1. 수강생 조회");
+            System.out.println("2. 전체 수강생 목록");
+            System.out.println("3. 상태별 수강생 목록");
+            System.out.println("4. 이전으로");
             System.out.print("조회 항목을 선택하세요 : ");
             int input = sc.nextInt();
+            sc.nextLine();
 
             switch (input) {
 
-                // 전체 수강생 목록 조회
+                // 수강생 조회
                 case 1 -> {
+                    System.out.println("\n수강생을 조회합니다...");
+                    System.out.print("조회할 수강생의 고유번호를 입력하세요 : ");
+                    String id = sc.next();
+                    sc.nextLine();
+
+                    for (Student student : CampManagementApp.studentStore) {
+                        if (id.equals(student.getStudentId())) {
+
+                            newStudentId = student.getStudentId();
+                            newStudentName = student.getStudentName();
+                            newStudentStatus = student.getStudentStatus();
+                            newSubjects = student.getSubjects();
+
+                            System.out.println("학생 고유번호 : " + newStudentId + " / 이름 : " + newStudentName + " / 상태 : " + newStudentStatus + " / 선택과목명 : " + Arrays.toString(newSubjects));
+                        } else {
+                            System.out.println("해당 수강생을 찾을 수 없습니다. 다시 조회해 주세요.");
+                        }
+                    }
+                }
+
+                // 전체 수강생 목록 조회
+                case 2 -> {
                     System.out.println("\n수강생 목록을 조회합니다...");
 
                     // 전체 수강생 목록이 비었다면 예외처리
@@ -221,10 +244,8 @@ public class ManagementStudent {
                         for (Student student : CampManagementApp.studentStore) {
                             newStudentId = student.getStudentId();
                             newStudentName = student.getStudentName();
-                            newStudentStatus = student.getStudentStatus();
-                            newSubjects = student.getSubjects();
 
-                            System.out.println("학생 고유번호 : " + newStudentId + " / 이름 : " + newStudentName + " / 상태 : " + newStudentStatus + " / 선택과목명 : " + Arrays.toString(newSubjects));
+                            System.out.println("학생 고유번호 : " + newStudentId + " / 이름 : " + newStudentName);
                         }
                         System.out.println("\n전체 수강생 목록 조회 성공!");
                     } else {
@@ -235,20 +256,24 @@ public class ManagementStudent {
                 }
 
                 // 상태별 수강생 목록 조회
-                case 2 -> {
+                case 3 -> {
                     System.out.println("\n상태별 수강생 목록을 조회합니다...");
                     System.out.println();
                     System.out.println("1. Green");
                     System.out.println("2. Red");
                     System.out.println("3. Yellow");
-                    System.out.print("항목을 선택하세요 : ");
+                    System.out.println("4. 상태미지정");
+                    System.out.print("상태 항목을 선택하세요. ex) 1 : ");
                     input = sc.nextInt();
+
+                    boolean found = false;
 
                     // 조회할 상태 선택
                     String status = switch (input) {
                         case 1 -> "Green";
                         case 2 -> "Red";
                         case 3 -> "Yellow";
+                        case 4 -> "상태미지정";
                         default -> {
                             System.out.println("잘못된 입력입니다.");
                             flag = false;
@@ -275,7 +300,7 @@ public class ManagementStudent {
                     }
                 }
 
-                case 3 -> { flag = false; }
+                case 4 -> { flag = false; }
 
                 default -> {
                     System.out.println("잘못된 입력입니다. 다시 선택해 주세요.");
