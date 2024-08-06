@@ -349,6 +349,11 @@ public class ManagementScore {
     public void inquireSpecificGradeAvg(){
 
         String status = getInputStudentStatus();
+        if (!status.equals("Green") && !status.equals("Red") && !status.equals("Yellow")){
+            System.out.println("상태를 정확히 입력하십시오(Green,Red,Yellow)");
+            return;
+        }
+
         if(!isInputStudentStatus(status)){
             System.out.println("해당 상태의 수강생이 없습니다.");
         }
