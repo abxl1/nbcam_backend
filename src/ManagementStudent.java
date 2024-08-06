@@ -147,7 +147,6 @@ public class ManagementStudent {
     // 등록된 수강생 목록 조회 ( 전체 조회 or 상태별 조회 )
     public static void inquireStudent() {
         boolean flag = true;
-        boolean found = false;
 
         while (flag) {
 
@@ -197,6 +196,7 @@ public class ManagementStudent {
                     System.out.println("1. Green");
                     System.out.println("2. Red");
                     System.out.println("3. Yellow");
+                    System.out.println("4. 미지정");
                     System.out.print("항목을 선택하세요 : ");
                     input = sc.nextInt();
 
@@ -205,6 +205,7 @@ public class ManagementStudent {
                         case 1 -> "Green";
                         case 2 -> "Red";
                         case 3 -> "Yellow";
+                        case 4 -> "상태미지정";
                         default -> {
                             System.out.println("잘못된 입력입니다.");
                             flag = false;
@@ -212,6 +213,8 @@ public class ManagementStudent {
                         }
                     };
                     System.out.println();
+
+                    boolean found = false;
 
                     // 상태별 수강생 목록 출력
                     for (Student student : CampManagementApp.studentStore) {
