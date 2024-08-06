@@ -3,10 +3,7 @@ import model.Score;
 import model.Student;
 import model.Subject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 // 점수관리 클래스
 public class ManagementScore {
@@ -176,23 +173,36 @@ public class ManagementScore {
     // 수강생의 과목별 회차 점수 수정
     public void updateRoundScoreBySubject() {
         String studentId = getInputStudentId();
+        if (!checkStudentId(studentId)) {
+            System.out.println("등록되지 않은 수강생입니다.");
+            return;
+        }
+        if (getStudentScores(studentId).isEmpty()) {
+            System.out.println("점수가 없는 학생입니다.");
+            return;
+        }
 
-            if (getStudentScores(studentId).isEmpty()) {
-                System.out.println("점수가 없는 학생입니다.");
-                return;
+
+        String subName = getInputSubjectname();
+        if (!isSubjectList(studentId, subName)) {
+            System.out.println("수강생의 수강과목중 입력하신 정보가 없습니다.");
+            return;
+        }
+        String subjectId = getSubjectId(subName);
+        while(true){
+            int round =0;
+
+            while(true) {
+                try {
+                    System.out.println("회차입력");
+                    Scanner sc = new Scanner(System.in);
+                    round = sc.nextInt();
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println("정수를 입력해주세요");
+                }
             }
 
-            String subName = getInputSubjectname();
-            if (!isSubjectList(studentId, subName)) {
-                System.out.println("해당 과목을 수강하지않습니다.");
-                return;
-            }
-            String subjectId = getSubjectId(subName);
-
-        while(true) {
-            System.out.println("회차입력");
-            Scanner sc = new Scanner(System.in);
-            int round = sc.nextInt();
 
             Score bigScore = null;
 
@@ -206,22 +216,35 @@ public class ManagementScore {
                 }
             }
 
-            if(bigScore == null) {
-                continue;
-            }
+            if(bigScore == null){continue;}
 
             System.out.println("점수 : " + bigScore.getScore() + " 등급 : " + bigScore.getGrade() + " 입니다.\n");
-            System.out.println("몇 점으로 수정하시겠습니까? ");
-            int newScore = sc.nextInt();
-            if (newScore > 100 || newScore < 0) {
-                System.out.println("0~100점 사이로 입력하세요");
-                return;
+            int newScore = 0;
+            while(true) {
+                try {
+                    System.out.println("몇 점으로 수정하시겠습니까? ");
+                    Scanner sc = new Scanner(System.in);
+                    newScore = sc.nextInt();
+                    if (0<=newScore && newScore <= 100) {
+                        break;
+                    }else{System.out.println("0~100점 사이로 입력하세요");}
+
+                } catch (InputMismatchException e) {
+                    System.out.println("정수를 입력해주세요");
+                }
             }
-            System.out.println("과목의 타입을 입력하세요(MANDATORY or CHOICE)");
-            String type = sc.next();
-            if (!checkType(subjectId,type)) {
-                System.out.println("과목의 타입을 제대로 입력하세요");
-                return;
+
+
+
+            String type = "";
+            while(true) {
+                System.out.println("과목의 타입을 입력하세요(MANDATORY or CHOICE)");
+                Scanner sc = new Scanner(System.in);
+                type = sc.next();
+
+                if (!checkType(subjectId, type)) {
+                    System.out.println("과목의 타입을 제대로 입력하세요");
+                }else{break;}
             }
             bigScore.setScore(newScore);
             bigScore.setGrade(returnGrade(type, newScore));
@@ -229,7 +252,11 @@ public class ManagementScore {
             System.out.println("점수 : " + bigScore.getScore() + " 등급 : " + bigScore.getGrade() + " 입니다.");
             return;
         }
+
+
     }
+
+
 
     // 기능 구현 - 한지은
     // 수강생의 특정 과목 회차별 등급 조회
