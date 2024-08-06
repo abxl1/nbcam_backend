@@ -27,6 +27,10 @@ public class CampManagementApp {
     // 스캐너
     static Scanner sc = new Scanner(System.in);
 
+    // 관리클래스 객체
+    static ManagementScore managementScore = new ManagementScore();
+    static ManagementStudent managementStudent = new ManagementStudent();
+
     public static void main(String[] args) {
         setInitData();
         try {
@@ -171,10 +175,10 @@ public class CampManagementApp {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> ManagementScore.createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
-                case 2 -> ManagementScore.updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
-                case 3 -> ManagementScore.inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
-                case 4 -> ManagementScore.inquireAverageGradeBySubject(); // 수강생의 과목별 평균 등급 조회
+                case 1 -> managementScore.createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
+                case 2 -> managementScore.updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
+                case 3 -> managementScore.inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
+                case 4 -> managementScore.inquireAverageGradeBySubject(); // 수강생의 과목별 평균 등급 조회
                 case 5 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");

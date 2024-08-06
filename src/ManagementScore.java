@@ -22,10 +22,16 @@ public class ManagementScore {
         return sc.next();
     }
 
-    //점수를 받아 등급을 반환하는 메서드 등급 만들기
+    // 사용자로부터 관리할 과목이름을 입력받는 메서드
+    private static String getInputSubjectname() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("\n관리할 과목을 입력하시오 : ");
+        return sc.next();
+    }
+
+    //점수를 받아 등급을 반환하는 메서드
     private static String returnGrade(String type, int score) {
         String grade = "";
-
         //필수 과목인지 선택과목인지
         if(type.equals(CampManagementApp.SUBJECT_TYPE_MANDATORY)) {
             //필수 과목일 경우 등급계산
@@ -46,9 +52,9 @@ public class ManagementScore {
             else grade = "N";
         }
         return grade;
-
     }
-    // 입력받은 수강생의 점수(Score)목록을 반환하는 메서드
+
+    // 입력받은 수강생 id의 점수(Score)목록을 반환하는 메서드
     private static List<Score> getStudentScores (String studentId) {
         List<Score> studentScores = new ArrayList<>();
         for (Score score : scores) {
@@ -78,7 +84,8 @@ public class ManagementScore {
         }
         return "";
     }
-    //학생 id가 맞는지 체크하는 메서드
+
+    // 등록 된 학생 id가 맞는지 체크하는 메서드
     private static boolean checkStudentId (String studentId) {
         for (Student student : students) {
             if(student.getStudentId().equals(studentId)) {
@@ -88,13 +95,25 @@ public class ManagementScore {
         return false;
     }
 
+    // 과목타입(필수,선택)을 체크하는 메서드
+    private static boolean checkType (String type) {
+        return type.equals("MANDATORY") || type.equals("CHOICE");
+    }
 
-
+    //학생 id,과목 id, round를 받아 해당하는 특정 score객체를 반환하는 메서드
+    private static Score getThatScore(String studentId, String subjectId, int round) {
+        for (Score score : scores) {
+            if (score.getSubjectId().equals(subjectId)&&score.getStudentId().equals(studentId)&&score.getRound()==round) {
+                return score;
+            }
+        }
+        return null;
+    }
 
 
     // 기능 구현 - 추종윤님
     // 수강생의 과목별 시험 회차 및 점수 등록
-    public static void createScore() {
+    public void createScore() {
 
         // 1.점수 등록할 사람 id입력받기 (저장)
         String studentId = getInputStudentId();
@@ -117,11 +136,9 @@ public class ManagementScore {
         }
 
         System.out.println("시험 점수를 등록합니다...");
-
         for(String sub :studentSubjects ) {
 
             // 4 - 1 과목별로 점수 입력받기(사용자) , 과목별로 담을 변수를 담기
-
             System.out.print( sub + "의 점수를 입력하시오 (1~100) :");
             int score = sc.nextInt();
 
@@ -133,7 +150,6 @@ public class ManagementScore {
                     subjectType = subject.getSubjectType();
                     subjectId = subject.getSubjectId();
                 }
-
             }
             String grade = returnGrade(subjectType, score);
 
@@ -147,9 +163,8 @@ public class ManagementScore {
 
     // 기능 구현 -정승헌님
     // 수강생의 과목별 회차 점수 수정
-    public static void updateRoundScoreBySubject() {
+    public void updateRoundScoreBySubject() {
         String studentId = getInputStudentId();
-
 
             if (getStudentScores(studentId).isEmpty()) {
                 System.out.println("점수가 없는 학생입니다.");
@@ -157,30 +172,24 @@ public class ManagementScore {
             }
 
             String subName = getInputSubjectname();
-
             if (!isSubjectList(studentId, subName)) {
                 System.out.println("해당 과목을 수강하지않습니다.");
                 return;
             }
-
             String subjectId = getSubjectId(subName);
 
         while(true) {
-
             System.out.println("회차입력");
             Scanner sc = new Scanner(System.in);
             int round = sc.nextInt();
 
-
             Score bigScore = null;
 
             for (int i = 0; i < scores.size(); i++) {
-
                 if (scores.get(i).getStudentId().equals(studentId) && scores.get(i).getSubjectId().equals(subjectId) && scores.get(i).getRound() == round) {
                     bigScore = getThatScore(studentId, subjectId, round);
                     break;
                 }
-
                 if (i + 1 == scores.size() && bigScore == null) {
                     System.out.println("해당 회차에 대한 정보가 없습니다.");
                 }
@@ -212,7 +221,7 @@ public class ManagementScore {
 
     // 기능 구현 - 한지은
     // 수강생의 특정 과목 회차별 등급 조회
-    public static void inquireRoundGradeBySubject () {
+    public void inquireRoundGradeBySubject () {
 
         //test input data(브랜치 병합 시 삭제 예정)
         students.add(new Student("st1", "수강생1", new String[]{"Java", "Spring"}));
@@ -258,12 +267,11 @@ public class ManagementScore {
         } else { // 수강중인 과목이 아닐경우
             System.out.println("수강 중인 과목이 아닙니다.");
         }
-
     }
 
     // 기능 구현 - 한지은
     // 수강생의 과목별 평균 등급 조회
-    public static void inquireAverageGradeBySubject() {
+    public void inquireAverageGradeBySubject() {
         // 조회할 수강생 ID 입력받기
         String studentId = getInputStudentId();
         if (!checkStudentId(studentId)) {
@@ -293,35 +301,6 @@ public class ManagementScore {
         }
         System.out.println("과목별 평균등급 조회 성공!");
     }
-
-
-            private static String getInputSubjectId() {
-                Scanner sc = new Scanner(System.in);
-                System.out.print("\n관리할 과목의 번호를 입력하시오 : ");
-                return sc.next();
-            }
-            private static String getInputSubjectname() {
-                Scanner sc = new Scanner(System.in);
-                System.out.print("\n관리할 과목을 입력하시오 : ");
-                return sc.next();
-            }
-    //필수,선택 입력을 체크하는 메서드
-    private static boolean checkType (String type) {
-        return type.equals("MANDATORY") || type.equals("CHOICE");
-    }
-
-    //학생 id,과목 id, round로 회차에 해당하는 특정 score객체 찾기.
-    public static Score getThatScore(String studentId,String subjectId,int round) {
-
-        for (Score score : scores) {
-            if (score.getSubjectId().equals(subjectId)&&score.getStudentId().equals(studentId)&&score.getRound()==round) {
-                return score;
-            }
-        }
-
-        return null;
-    }
-
 
 }
 
