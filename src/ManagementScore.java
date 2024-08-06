@@ -96,8 +96,15 @@ public class ManagementScore {
     }
 
     // 과목타입(필수,선택)을 체크하는 메서드
-    private static boolean checkType (String type) {
-        return type.equals("MANDATORY") || type.equals("CHOICE");
+    private static boolean checkType (String subjectId,String type) {
+        for(Subject subject : subjects){
+            if(subject.getSubjectId().equals(subjectId)){
+                if(subject.getSubjectType().equals(type)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     //학생 id,과목 id, round를 받아 해당하는 특정 score객체를 반환하는 메서드
@@ -212,12 +219,13 @@ public class ManagementScore {
             }
             System.out.println("과목의 타입을 입력하세요(MANDATORY or CHOICE)");
             String type = sc.next();
-            if (!checkType(type)) {
+            if (!checkType(subjectId,type)) {
                 System.out.println("과목의 타입을 제대로 입력하세요");
                 return;
             }
             bigScore.setScore(newScore);
             bigScore.setGrade(returnGrade(type, newScore));
+            System.out.println("수정이 완료되었습니다.");
             System.out.println("점수 : " + bigScore.getScore() + " 등급 : " + bigScore.getGrade() + " 입니다.");
             return;
         }
