@@ -156,11 +156,11 @@ public class CampManagementApp {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> ManagementStudent.createStudent(); // 수강생 등록
-                case 2 -> ManagementStudent.inquireStudent(); // 수강생 목록 조회
-                case 3 -> ManagementStudent.createStudentStatus(); // 수강생 상태 등록
-                case 4 -> ManagementStudent.changeStudent(); // 수강생 정보 수정
-                case 5 -> ManagementStudent.deleteStudent(); // 수강생 정보 삭제
+                case 1 -> managementStudent.createStudent(); // 수강생 등록
+                case 2 -> managementStudent.inquireStudent(); // 수강생 목록 조회
+                case 3 -> managementStudent.createStudentStatus(); // 수강생 상태 등록
+                case 4 -> managementStudent.changeStudent(); // 수강생 정보 수정
+                case 5 -> managementStudent.deleteStudent(); // 수강생 정보 삭제
                 case 6 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
