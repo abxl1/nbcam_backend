@@ -8,26 +8,26 @@ import java.util.*;
 // 점수관리 클래스
 public class ManagementScore {
 
-    static List<Student> students = CampManagementApp.studentStore;
-    static List<Subject> subjects = CampManagementApp.subjectStore;
-    static List<Score> scores = CampManagementApp.scoreStore;
+    private List<Student> students = CampManagementApp.studentStore;
+    private List<Subject> subjects = CampManagementApp.subjectStore;
+    private List<Score> scores = CampManagementApp.scoreStore;
 
     // 사용자로부터 관리할 수강생 ID를 입력받는 메서드.
-    private static String getInputStudentId() {
+    private String getInputStudentId() {
         Scanner sc = new Scanner(System.in);
         System.out.print("\n관리할 수강생의 번호를 입력하시오 : ");
         return sc.next();
     }
 
     // 사용자로부터 관리할 과목이름을 입력받는 메서드
-    private static String getInputSubjectname() {
+    private String getInputSubjectname() {
         Scanner sc = new Scanner(System.in);
         System.out.print("\n관리할 과목을 입력하시오 : ");
         return sc.next();
     }
 
     //점수를 받아 등급을 반환하는 메서드
-    private static String returnGrade(String type, int score) {
+    private String returnGrade(String type, int score) {
         String grade = "";
         //필수 과목인지 선택과목인지
         if (type.equals(CampManagementApp.SUBJECT_TYPE_MANDATORY)) {
@@ -52,7 +52,7 @@ public class ManagementScore {
     }
 
     // 입력받은 수강생 id의 점수(Score)목록을 반환하는 메서드
-    private static List<Score> getStudentScores(String studentId) {
+    private List<Score> getStudentScores(String studentId) {
         List<Score> studentScores = new ArrayList<>();
         for (Score score : scores) {
             if (studentId.equals(score.getStudentId())) {
@@ -63,7 +63,7 @@ public class ManagementScore {
     }
 
     // 과목명(subjectName)이 수강생(studentId)의 수강중인 과목인지 체크하는 메서드
-    private static boolean isSubjectList(String studentId, String subjectName) {
+    private boolean isSubjectList(String studentId, String subjectName) {
         for (Student student : students) {
             if (student.getStudentId().equals(studentId) && Arrays.asList(student.getSubjects()).contains(subjectName)) {
                 return true;
@@ -73,7 +73,7 @@ public class ManagementScore {
     }
 
     // 입력받은 과목명으로 과목 ID를 얻는 메서드.
-    private static String getSubjectId(String subjectName) {
+    private String getSubjectId(String subjectName) {
         for (Subject subject : subjects) {
             if (subject.getSubjectName().equals(subjectName)) {
                 return subject.getSubjectId();
@@ -83,7 +83,7 @@ public class ManagementScore {
     }
 
     // 등록 된 학생 id가 맞는지 체크하는 메서드
-    private static boolean checkStudentId(String studentId) {
+    private boolean checkStudentId(String studentId) {
         for (Student student : students) {
             if (student.getStudentId().equals(studentId)) {
                 return true;
@@ -93,7 +93,7 @@ public class ManagementScore {
     }
 
     // 과목타입(필수,선택)을 체크하는 메서드
-    private static boolean checkType(String subjectId, String type) {
+    private boolean checkType(String subjectId, String type) {
         for (Subject subject : subjects) {
             if (subject.getSubjectId().equals(subjectId)) {
                 if (subject.getSubjectType().equals(type)) {
@@ -105,7 +105,7 @@ public class ManagementScore {
     }
 
     //학생 id,과목 id, round를 받아 해당하는 특정 score객체를 반환하는 메서드
-    private static Score getThatScore(String studentId, String subjectId, int round) {
+    private Score getThatScore(String studentId, String subjectId, int round) {
         for (Score score : scores) {
             if (score.getSubjectId().equals(subjectId) && score.getStudentId().equals(studentId) && score.getRound() == round) {
                 return score;
