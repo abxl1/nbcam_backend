@@ -1,3 +1,4 @@
+import model.Score;
 import model.Student;
 import model.Subject;
 
@@ -123,6 +124,68 @@ public class ManagementStudent {
         }
     }
 
+    //수강생 정보 삭제
+    public static void deleteStudent() {
+        System.out.println("==================================");
+        System.out.println("수강생 정보 삭제 프로그램 실행중...");
+        System.out.println("삭제할 수강생의 이름을 입력하세요 : ");
+        Scanner sc = new Scanner(System.in);
+        String studentName = sc.next();
+        sc.nextLine();
+        boolean found = false;
+        Student delSt = null;
+        Score delSc = null;
+
+
+        deleteLoop:
+        for(Student st : CampManagementApp.studentStore) {
+            if (st.getStudentName().equals(studentName)) {
+                delSt = st;
+                found = true;
+                System.out.println("학생 고유번호 : " + st.getStudentId() +
+                        " / 이름 : " + st.getStudentName() +
+                        " / 상태 : " + st.getStudentStatus() +
+                        " / 선택과목명 : " + Arrays.toString(st.getSubjects()));
+                System.out.println("위 학생의 정보(점수포함)를 삭제하시겠습니다? (y / n)중 입력]");
+                String input = sc.next();
+                sc.nextLine();
+
+
+
+                boolean loop = false;
+                while (!loop){
+                    switch (input){
+                        case "y":
+                            System.out.println(st.getStudentId()+ " " + st.getStudentName() + "학생의 정보를 삭제했습니다.");
+                            for (Score sco : CampManagementApp.scoreStore) {
+                                if (st.getStudentId().equals(sco.getStudentId())) {
+                                    delSc = sco;
+                                    break;
+                                }
+                            }
+                            loop = true;
+                            break;
+                        case "n":
+                            System.out.println("정보 삭제 프로그램을 종료합니다.");
+                            break deleteLoop;
+                        default:
+                            System.out.println("잘못된 입력입니다, 대소문자를 구분해서 y 또는 n을 입력해주세요.");
+                            input = sc.next();
+                            sc.nextLine();
+                    }
+                }
+            }
+        }
+        if(delSt != null){
+            CampManagementApp.scoreStore.remove(delSc);
+            CampManagementApp.studentStore.remove(delSt);
+        }
+
+        if(!found){
+            System.out.println("등록되지않은 수강생입니다, 수강생 관리 화면으로 돌아갑니다.");
+        }
+    }
+
 
 
 
@@ -147,6 +210,7 @@ public class ManagementStudent {
     // 등록된 수강생 목록 조회 ( 전체 조회 or 상태별 조회 )
     public static void inquireStudent() {
         boolean flag = true;
+        boolean found = false;
 
         while (flag) {
 
@@ -196,7 +260,6 @@ public class ManagementStudent {
                     System.out.println("1. Green");
                     System.out.println("2. Red");
                     System.out.println("3. Yellow");
-                    System.out.println("4. 미지정");
                     System.out.print("항목을 선택하세요 : ");
                     input = sc.nextInt();
 
@@ -205,7 +268,6 @@ public class ManagementStudent {
                         case 1 -> "Green";
                         case 2 -> "Red";
                         case 3 -> "Yellow";
-                        case 4 -> "상태미지정";
                         default -> {
                             System.out.println("잘못된 입력입니다.");
                             flag = false;
@@ -213,8 +275,6 @@ public class ManagementStudent {
                         }
                     };
                     System.out.println();
-
-                    boolean found = false;
 
                     // 상태별 수강생 목록 출력
                     for (Student student : CampManagementApp.studentStore) {
