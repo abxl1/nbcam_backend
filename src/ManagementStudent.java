@@ -10,11 +10,11 @@ import java.util.Scanner;
 // 수강생 관리 클래스
 public class ManagementStudent {
     // 스캐너
-    static Scanner sc = new Scanner(System.in);
+    private Scanner sc = new Scanner(System.in);
 
     // 기능 구현 - 강동준님
     // 수강생 등록
-    public static void createStudent() {
+    public void createStudent() {
         boolean vaildInput = false;
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력(한글만입력가능): ");
@@ -69,7 +69,7 @@ public class ManagementStudent {
 
 
     // 수강생 상태 등록 메서드
-    public static void createStudentStatus(){
+    public void createStudentStatus(){
         System.out.println("==================================");
         System.out.println("수강생의 상태등록 실행중...");
         System.out.println("상태를 등록할 수강생의 이름을 입력해주세요 : ");
@@ -95,7 +95,7 @@ public class ManagementStudent {
     }
 
     // 수강생 정보(이름, 상태) 수정 메서드
-    public static void changeStudent(){
+    public void changeStudent(){
         System.out.println("==================================");
         System.out.println("수강생 정보 수정 실행중...");
         System.out.println("정보(이름, 상태)를 수정 할 수강생의 이름을 입력하세요 : ");
@@ -125,7 +125,7 @@ public class ManagementStudent {
     }
 
     //수강생 정보 삭제
-    public static void deleteStudent() {
+    public void deleteStudent() {
         System.out.println("==================================");
         System.out.println("수강생 정보 삭제 프로그램 실행중...");
         System.out.println("삭제할 수강생의 이름을 입력하세요 : ");
@@ -187,28 +187,9 @@ public class ManagementStudent {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // 기능 구현 - 김나영님
     // 등록된 수강생 목록 조회 ( 전체 조회 or 상태별 조회 )
-    public static void inquireStudent() {
+    public void inquireStudent() {
         boolean flag = true;
         boolean found = false;
 
