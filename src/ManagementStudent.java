@@ -16,7 +16,8 @@ public class ManagementStudent {
     // 수강생 등록
     public void createStudent() {
         boolean vaildInput = false;
-        System.out.println("\n수강생을 등록합니다...");
+        System.out.println("==================================");
+        System.out.println("수강생을 등록합니다...");
         System.out.print("수강생 이름 입력(한글만입력가능): ");
         String studentName = Student.inputName();
         ManagementStudent ms = new ManagementStudent();
@@ -35,8 +36,11 @@ public class ManagementStudent {
         for(Subject subject : CampManagementApp.subjectStore){
             System.out.println(subject.getSubjectId()+" "+subject.getSubjectName()+" "+subject.getSubjectType());
         }
-        System.out.print("수강 과목 코드입력[,로 구분 뛰어쓰기 없이 대문자로 정확히 입력해 주세요 ex)SU1,SU2...]: \n");
-        System.out.println("최소 필수(MANDATORY)과목 3개이상, 선택(CHOICE)과목 2개이상을 선택해야합니다.");
+        System.out.println("---------------------------------");
+        System.out.println("수강 과목 코드를 입력하시오");
+        System.out.println("-|,로 구분 뛰어쓰기 없이 대문자로 정확히 입력해 주세요. ex)SU1,SU2... ");
+        System.out.println("-|최소 필수(MANDATORY)과목 3개이상, 선택(CHOICE)과목 2개이상을 선택해야합니다.");
+        System.out.print("입력 과목 : ");
 
         String[] subjectsCode = sc.nextLine().split(",");
         String[] subjects = new String[subjectsCode.length];
@@ -88,7 +92,7 @@ public class ManagementStudent {
     public void createStudentStatus(){
         System.out.println("==================================");
         System.out.println("수강생의 상태등록 실행중...");
-        System.out.println("상태를 등록할 수강생의 이름을 입력해주세요 : ");
+        System.out.print("상태를 등록할 수강생의 이름을 입력해주세요 : ");
         Scanner sc = new Scanner(System.in);
         String studentName = sc.next();
         sc.nextLine();
@@ -114,7 +118,7 @@ public class ManagementStudent {
     public void changeStudent(){
         System.out.println("==================================");
         System.out.println("수강생 정보 수정 실행중...");
-        System.out.println("정보(이름, 상태)를 수정 할 수강생의 이름을 입력하세요 : ");
+        System.out.print("정보(이름, 상태)를 수정 할 수강생의 이름을 입력하세요 : ");
         Scanner sc = new Scanner(System.in);
         String studentName = sc.next();
         sc.nextLine();
@@ -126,6 +130,7 @@ public class ManagementStudent {
                 System.out.println("수정 할 내용을 선택하세요.");
                 System.out.println("1. 수강생 이름 수정");
                 System.out.println("2. 수강생 상태 수정");
+                System.out.print("선택 번호 : ");
                 int input = sc.nextInt();
 
                 switch (input) {
@@ -144,7 +149,7 @@ public class ManagementStudent {
     public void deleteStudent() {
         System.out.println("==================================");
         System.out.println("수강생 정보 삭제 프로그램 실행중...");
-        System.out.println("삭제할 수강생의 이름을 입력하세요 : ");
+        System.out.print("삭제할 수강생의 이름을 입력하세요 : ");
         Scanner sc = new Scanner(System.in);
         String studentName = sc.next();
         sc.nextLine();
@@ -158,10 +163,10 @@ public class ManagementStudent {
             if (st.getStudentName().equals(studentName)) {
                 delSt = st;
                 found = true;
-                System.out.println("학생 고유번호 : " + st.getStudentId() +
-                        " / 이름 : " + st.getStudentName() +
-                        " / 상태 : " + st.getStudentStatus() +
-                        " / 선택과목명 : " + Arrays.toString(st.getSubjects()));
+                System.out.println("학생 고유번호= " + st.getStudentId() +
+                        " | 이름= " + st.getStudentName() +
+                        " | 상태= " + st.getStudentStatus() +
+                        " | 선택과목명= " + Arrays.toString(st.getSubjects()));
                 System.out.println("위 학생의 정보(점수포함)를 삭제하시겠습니다? (y / n)중 입력]");
                 String input = sc.next();
                 sc.nextLine();
@@ -218,8 +223,8 @@ public class ManagementStudent {
             System.out.println("==================================");
             System.out.println("수강생 조회 프로그램 실행 중...");
             System.out.println("1. 수강생 조회");
-            System.out.println("2. 전체 수강생 목록");
-            System.out.println("3. 상태별 수강생 목록");
+            System.out.println("2. 전체 수강생 목록 조회");
+            System.out.println("3. 상태별 수강생 목록 조회");
             System.out.println("4. 이전으로");
             System.out.print("조회 항목을 선택하세요 : ");
             int input = sc.nextInt();
@@ -229,7 +234,8 @@ public class ManagementStudent {
 
                 // 수강생 조회
                 case 1 -> {
-                    System.out.println("\n수강생을 조회합니다...");
+                    System.out.println("==================================");
+                    System.out.println("수강생을 조회합니다...");
                     System.out.print("조회할 수강생의 고유번호를 입력하세요 : ");
                     String id = sc.next();
                     sc.nextLine();
@@ -242,7 +248,7 @@ public class ManagementStudent {
                             newStudentStatus = student.getStudentStatus();
                             newSubjects = student.getSubjects();
 
-                            System.out.println("학생 고유번호 : " + newStudentId + " / 이름 : " + newStudentName + " / 상태 : " + newStudentStatus + " / 선택과목명 : " + Arrays.toString(newSubjects));
+                            System.out.println("학생 고유번호= " + newStudentId + " | 이름= " + newStudentName + " | 상태= " + newStudentStatus + " | 선택과목명= " + Arrays.toString(newSubjects));
                         } else {
                             System.out.println("해당 수강생을 찾을 수 없습니다. 다시 조회해 주세요.");
                         }
@@ -251,7 +257,8 @@ public class ManagementStudent {
 
                 // 전체 수강생 목록 조회
                 case 2 -> {
-                    System.out.println("\n수강생 목록을 조회합니다...");
+                    System.out.println("==================================");
+                    System.out.println("수강생 목록을 조회합니다...");
 
                     // 전체 수강생 목록이 비었다면 예외처리
                     if (!CampManagementApp.studentStore.isEmpty()) {
@@ -261,9 +268,9 @@ public class ManagementStudent {
                             newStudentId = student.getStudentId();
                             newStudentName = student.getStudentName();
 
-                            System.out.println("학생 고유번호 : " + newStudentId + " / 이름 : " + newStudentName);
+                            System.out.println("학생 고유번호= " + newStudentId + " | 이름= " + newStudentName);
                         }
-                        System.out.println("\n전체 수강생 목록 조회 성공!");
+                        System.out.println("전체 수강생 목록 조회 성공!");
                     } else {
                         System.out.println();
                         System.out.println("등록된 수강생이 없습니다.");
@@ -273,8 +280,8 @@ public class ManagementStudent {
 
                 // 상태별 수강생 목록 조회
                 case 3 -> {
-                    System.out.println("\n상태별 수강생 목록을 조회합니다...");
-                    System.out.println();
+                    System.out.println("==================================");
+                    System.out.println("상태별 수강생 목록을 조회합니다...");
                     System.out.println("1. Green");
                     System.out.println("2. Red");
                     System.out.println("3. Yellow");
@@ -303,7 +310,7 @@ public class ManagementStudent {
                         if (status.equals(student.getStudentStatus())) {
                             newStudentId = student.getStudentId();
                             newStudentName = student.getStudentName();
-                            System.out.println("학생 고유번호 : " + newStudentId + " / 이름 : " + newStudentName);
+                            System.out.println("학생 고유번호= " + newStudentId + " | 이름= " + newStudentName);
                             found = true;
                         }
                     }

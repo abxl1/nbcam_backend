@@ -31,7 +31,7 @@ public class Student {
 
     // 수강생 상태 등록 메서드
     public void setStudentStatus() {
-        System.out.println("수강생의 상태를 (Green, Red, Yellow)중에 입력해주세요.");
+        System.out.print("수강생의 상태를 (Green, Red, Yellow)중에 입력해주세요. : ");
 
         boolean vaildInput = false;
         while(!vaildInput){
@@ -42,7 +42,7 @@ public class Student {
                 this.studentStatus = studentStatus;
                 vaildInput = true;
             }else{
-                System.out.println("잘못된 상태값입니다. (Green, Red, Yellow)중에 입력해주세요.");
+                System.out.print("잘못된 상태값입니다. (Green, Red, Yellow)중에 입력해주세요. : ");
             }
         }
     }
@@ -57,6 +57,7 @@ public class Student {
                 vaildInput = true;
             }else {
                 System.out.println("유효하지 않은 입력입니다. 이름은 한글로만 입력해주세요.");
+                System.out.print("수강생 이름 입력(한글만입력가능): ");
                 studentName = sc.next();
                 sc.nextLine();
             }
@@ -67,8 +68,8 @@ public class Student {
     // 수강생 이름 수정 메서드
     public void changeName(){
         System.out.println("==================================");
-        System.out.println("수강생 이름 수정 실행중...\n");
-        System.out.println("수정 할 이름을 입력하세요.");
+        System.out.println("수강생 이름 수정 실행중...");
+        System.out.print("수정 할 이름을 입력하세요. : ");
         String beforeName = this.studentName;
         String newName = inputName();
         this.studentName = newName;
@@ -80,7 +81,7 @@ public class Student {
     // 수강생의 상태 수정 메서드
     public void changeStatus(){
         System.out.println("==================================");
-        System.out.println("수강생 상태 수정 실행중...\n");
+        System.out.println("수강생 상태 수정 실행중...");
 
         String status = this.studentStatus;
         System.out.println(String.format("현재 %s수강생의 상태는 \"%s\"입니다.",this.studentName ,status));

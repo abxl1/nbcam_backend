@@ -15,14 +15,15 @@ public class ManagementScore {
     // 사용자로부터 관리할 수강생 ID를 입력받는 메서드.
     private String getInputStudentId() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("\n관리할 수강생의 번호를 입력하시오 : ");
+        System.out.println("==================================");
+        System.out.print("관리할 수강생의 번호를 입력하시오 : ");
         return sc.next();
     }
 
     // 사용자로부터 관리할 과목이름을 입력받는 메서드
     private String getInputSubjectname() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("\n관리할 과목을 입력하시오 : ");
+        System.out.print("관리할 과목을 입력하시오 : ");
         return sc.next();
     }
 
@@ -114,6 +115,23 @@ public class ManagementScore {
         return null;
     }
 
+    //상태 입력받고
+    private String getInputStudentStatus() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("관리할 수강생의 상태를 입력하시오(Green, Red, Yellow) : ");
+        return sc.next();
+    }
+
+    private boolean isInputStudentStatus(String status){
+        for(Student student:students){
+            if(student.getStudentStatus().equals(status)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
     // 기능 구현 - 추종윤님
     // 수강생의 과목별 시험 회차 및 점수 등록
@@ -136,7 +154,7 @@ public class ManagementScore {
 
         // 3. 등록할 회차 입력받기(사용자)
         Scanner sc = new Scanner(System.in);
-        System.out.print("\n등록할 회차를 입력하시오 (1~10) : ");
+        System.out.print("등록할 회차를 입력하시오 (1~10) : ");
         int inputRound = sc.nextInt();
         if (inputRound < 1 || inputRound > 10) {
             System.out.println("1~10 사이로 입력하세요.");
@@ -185,7 +203,6 @@ public class ManagementScore {
             System.out.println("점수가 없는 학생입니다.");
             return;
         }
-
 
         String subName = getInputSubjectname();
         if (!isSubjectList(studentId, subName)) {
@@ -245,7 +262,7 @@ public class ManagementScore {
 
             String type = "";
             while (true) {
-                System.out.println("과목의 타입을 입력하세요(MANDATORY or CHOICE)");
+                System.out.print("과목의 타입을 입력하세요(MANDATORY or CHOICE) : ");
                 Scanner sc = new Scanner(System.in);
                 type = sc.next();
 
@@ -344,6 +361,7 @@ public class ManagementScore {
         System.out.println("과목별 평균등급 조회 성공!");
     }
 
+
     //기능구현 - 정승헌
     //특정 상태 수강생들의 필수 과목 평균 등급을 조회합니다
     public void inquireSpecificGradeAvg(){
@@ -391,30 +409,6 @@ public class ManagementScore {
 
 
     }
-
-
-
-
-    //상태 입력받고
-    private String getInputStudentStatus() {
-
-        Scanner sc = new Scanner(System.in);
-        System.out.print("관리할 수강생의 상태를 입력하시오(Green, Red, Yellow) : ");
-        return sc.next();
-
-    }
-
-    private boolean isInputStudentStatus(String status){
-        for(Student student:students){
-            if(student.getStudentStatus().equals(status)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-
 
 }
 
