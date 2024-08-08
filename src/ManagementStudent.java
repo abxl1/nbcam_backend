@@ -3,8 +3,6 @@ import model.Student;
 import model.Subject;
 
 import java.util.Arrays;
-import java.util.Scanner;
-
 
 
 // 수강생 관리 클래스
@@ -13,7 +11,6 @@ public class ManagementStudent {
     // 기능 구현 - 강동준님
     // 수강생 등록
     public void createStudent() {
-        boolean vaildInput = false;
         System.out.println("==================================");
         System.out.println("수강생을 등록합니다...");
         System.out.print("수강생 이름 입력(한글만입력가능): ");
@@ -29,7 +26,6 @@ public class ManagementStudent {
 
     // 코드를 입력받아 과목명으로 저장
     public String[] inputSubject(){
-        Scanner sc = new Scanner(System.in);
         boolean found = false;
         for(Subject subject : CampManagementApp.subjectStore){
             System.out.println(subject.getSubjectId()+" "+subject.getSubjectName()+" "+subject.getSubjectType());
@@ -91,7 +87,6 @@ public class ManagementStudent {
         System.out.println("==================================");
         System.out.println("수강생의 상태등록 실행중...");
         System.out.print("상태를 등록할 수강생의 이름을 입력해주세요 : ");
-        Scanner sc = new Scanner(System.in);
         String studentName = CampManagementApp.sc.next();
         CampManagementApp.sc.nextLine();
         boolean found = false;
@@ -117,7 +112,6 @@ public class ManagementStudent {
         System.out.println("==================================");
         System.out.println("수강생 정보 수정 실행중...");
         System.out.print("정보(이름, 상태)를 수정 할 수강생의 이름을 입력하세요 : ");
-        Scanner sc = new Scanner(System.in);
         String studentName = CampManagementApp.sc.next();
         CampManagementApp.sc.nextLine();
         boolean found = false;
@@ -148,7 +142,6 @@ public class ManagementStudent {
         System.out.println("==================================");
         System.out.println("수강생 정보 삭제 프로그램 실행중...");
         System.out.print("삭제할 수강생의 이름을 입력하세요 : ");
-        Scanner sc = new Scanner(System.in);
         String studentName = CampManagementApp.sc.next();
         CampManagementApp.sc.nextLine();
         boolean found = false;
