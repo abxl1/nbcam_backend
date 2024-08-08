@@ -9,8 +9,6 @@ import java.util.Scanner;
 
 // 수강생 관리 클래스
 public class ManagementStudent {
-    // 스캐너
-    private Scanner sc = new Scanner(System.in);
 
     // 기능 구현 - 강동준님
     // 수강생 등록
@@ -42,7 +40,7 @@ public class ManagementStudent {
         System.out.println("-|최소 필수(MANDATORY)과목 3개이상, 선택(CHOICE)과목 2개이상을 선택해야합니다.");
         System.out.print("입력 과목 : ");
 
-        String[] subjectsCode = sc.nextLine().split(",");
+        String[] subjectsCode = CampManagementApp.sc.nextLine().split(",");
         String[] subjects = new String[subjectsCode.length];
 
         int mandatory = 0;
@@ -94,8 +92,8 @@ public class ManagementStudent {
         System.out.println("수강생의 상태등록 실행중...");
         System.out.print("상태를 등록할 수강생의 이름을 입력해주세요 : ");
         Scanner sc = new Scanner(System.in);
-        String studentName = sc.next();
-        sc.nextLine();
+        String studentName = CampManagementApp.sc.next();
+        CampManagementApp.sc.nextLine();
         boolean found = false;
 
         // 수강생 객체에 접근
@@ -120,8 +118,8 @@ public class ManagementStudent {
         System.out.println("수강생 정보 수정 실행중...");
         System.out.print("정보(이름, 상태)를 수정 할 수강생의 이름을 입력하세요 : ");
         Scanner sc = new Scanner(System.in);
-        String studentName = sc.next();
-        sc.nextLine();
+        String studentName = CampManagementApp.sc.next();
+        CampManagementApp.sc.nextLine();
         boolean found = false;
 
         for(Student st : CampManagementApp.studentStore) {
@@ -131,7 +129,7 @@ public class ManagementStudent {
                 System.out.println("1. 수강생 이름 수정");
                 System.out.println("2. 수강생 상태 수정");
                 System.out.print("선택 번호 : ");
-                int input = sc.nextInt();
+                int input = CampManagementApp.sc.nextInt();
 
                 switch (input) {
                     case 1 -> st.changeName(); // 수강생 이름 수정
@@ -151,8 +149,8 @@ public class ManagementStudent {
         System.out.println("수강생 정보 삭제 프로그램 실행중...");
         System.out.print("삭제할 수강생의 이름을 입력하세요 : ");
         Scanner sc = new Scanner(System.in);
-        String studentName = sc.next();
-        sc.nextLine();
+        String studentName = CampManagementApp.sc.next();
+        CampManagementApp.sc.nextLine();
         boolean found = false;
         Student delSt = null;
         Score delSc = null;
@@ -168,8 +166,8 @@ public class ManagementStudent {
                         " | 상태= " + st.getStudentStatus() +
                         " | 선택과목명= " + Arrays.toString(st.getSubjects()));
                 System.out.println("위 학생의 정보(점수포함)를 삭제하시겠습니다? (y / n)중 입력]");
-                String input = sc.next();
-                sc.nextLine();
+                String input = CampManagementApp.sc.next();
+                CampManagementApp.sc.nextLine();
 
 
 
@@ -191,8 +189,8 @@ public class ManagementStudent {
                             break deleteLoop;
                         default:
                             System.out.println("잘못된 입력입니다, 대소문자를 구분해서 y 또는 n을 입력해주세요.");
-                            input = sc.next();
-                            sc.nextLine();
+                            input = CampManagementApp.sc.next();
+                            CampManagementApp.sc.nextLine();
                     }
                 }
             }
@@ -227,8 +225,8 @@ public class ManagementStudent {
             System.out.println("3. 상태별 수강생 목록 조회");
             System.out.println("4. 이전으로");
             System.out.print("조회 항목을 선택하세요 : ");
-            int input = sc.nextInt();
-            sc.nextLine();
+            int input = CampManagementApp.sc.nextInt();
+            CampManagementApp.sc.nextLine();
 
             switch (input) {
 
@@ -237,8 +235,8 @@ public class ManagementStudent {
                     System.out.println("==================================");
                     System.out.println("수강생을 조회합니다...");
                     System.out.print("조회할 수강생의 고유번호를 입력하세요 : ");
-                    String id = sc.next();
-                    sc.nextLine();
+                    String id = CampManagementApp.sc.next();
+                    CampManagementApp.sc.nextLine();
 
                     for (Student student : CampManagementApp.studentStore) {
                         if (id.equals(student.getStudentId())) {
@@ -287,7 +285,7 @@ public class ManagementStudent {
                     System.out.println("3. Yellow");
                     System.out.println("4. 상태미지정");
                     System.out.print("상태 항목을 선택하세요. ex) 1 : ");
-                    input = sc.nextInt();
+                    input = CampManagementApp.sc.nextInt();
 
                     boolean found = false;
 

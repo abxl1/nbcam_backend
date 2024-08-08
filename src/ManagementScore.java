@@ -8,23 +8,17 @@ import java.util.*;
 // 점수관리 클래스
 public class ManagementScore {
 
-    private List<Student> students = CampManagementApp.studentStore;
-    private List<Subject> subjects = CampManagementApp.subjectStore;
-    private List<Score> scores = CampManagementApp.scoreStore;
-
     // 사용자로부터 관리할 수강생 ID를 입력받는 메서드.
     private String getInputStudentId() {
-        Scanner sc = new Scanner(System.in);
         System.out.println("==================================");
         System.out.print("관리할 수강생의 번호를 입력하시오 : ");
-        return sc.next();
+        return CampManagementApp.sc.next();
     }
 
     // 사용자로부터 관리할 과목이름을 입력받는 메서드
     private String getInputSubjectname() {
-        Scanner sc = new Scanner(System.in);
         System.out.print("관리할 과목을 입력하시오 : ");
-        return sc.next();
+        return CampManagementApp.sc.next();
     }
 
     //점수를 받아 등급을 반환하는 메서드
@@ -55,7 +49,7 @@ public class ManagementScore {
     // 입력받은 수강생 id의 점수(Score)목록을 반환하는 메서드
     private List<Score> getStudentScores(String studentId) {
         List<Score> studentScores = new ArrayList<>();
-        for (Score score : scores) {
+        for (Score score : CampManagementApp.scoreStore) {
             if (studentId.equals(score.getStudentId())) {
                 studentScores.add(score);
             }
@@ -65,7 +59,7 @@ public class ManagementScore {
 
     // 과목명(subjectName)이 수강생(studentId)의 수강중인 과목인지 체크하는 메서드
     private boolean isSubjectList(String studentId, String subjectName) {
-        for (Student student : students) {
+        for (Student student : CampManagementApp.studentStore) {
             if (student.getStudentId().equals(studentId) && Arrays.asList(student.getSubjects()).contains(subjectName)) {
                 return true;
             }
@@ -75,7 +69,7 @@ public class ManagementScore {
 
     // 입력받은 과목명으로 과목 ID를 얻는 메서드.
     private String getSubjectId(String subjectName) {
-        for (Subject subject : subjects) {
+        for (Subject subject : CampManagementApp.subjectStore) {
             if (subject.getSubjectName().equals(subjectName)) {
                 return subject.getSubjectId();
             }
@@ -85,7 +79,7 @@ public class ManagementScore {
 
     // 등록 된 학생 id가 맞는지 체크하는 메서드
     private boolean checkStudentId(String studentId) {
-        for (Student student : students) {
+        for (Student student : CampManagementApp.studentStore) {
             if (student.getStudentId().equals(studentId)) {
                 return true;
             }
@@ -95,7 +89,7 @@ public class ManagementScore {
 
     // 과목타입(필수,선택)을 체크하는 메서드
     private boolean checkType(String subjectId, String type) {
-        for (Subject subject : subjects) {
+        for (Subject subject : CampManagementApp.subjectStore) {
             if (subject.getSubjectId().equals(subjectId)) {
                 if (subject.getSubjectType().equals(type)) {
                     return true;
@@ -107,7 +101,7 @@ public class ManagementScore {
 
     //학생 id,과목 id, round를 받아 해당하는 특정 score객체를 반환하는 메서드
     private Score getThatScore(String studentId, String subjectId, int round) {
-        for (Score score : scores) {
+        for (Score score : CampManagementApp.scoreStore) {
             if (score.getSubjectId().equals(subjectId) && score.getStudentId().equals(studentId) && score.getRound() == round) {
                 return score;
             }
@@ -117,13 +111,12 @@ public class ManagementScore {
 
     //상태 입력받고
     private String getInputStudentStatus() {
-        Scanner sc = new Scanner(System.in);
         System.out.print("관리할 수강생의 상태를 입력하시오(Green, Red, Yellow) : ");
-        return sc.next();
+        return CampManagementApp.sc.next();
     }
 
     private boolean isInputStudentStatus(String status){
-        for(Student student:students){
+        for(Student student:CampManagementApp.studentStore){
             if(student.getStudentStatus().equals(status)){
                 return true;
             }
@@ -146,16 +139,15 @@ public class ManagementScore {
 
         // 2. 해당 수강생 ID를 가진 수강생 찾기와 과목 등록
         String[] studentSubjects = {};
-        for (Student student : students) {
+        for (Student student : CampManagementApp.studentStore) {
             if (student.getStudentId().equals(studentId)) { //학생비교
                 studentSubjects = student.getSubjects();  //수강목록을 가져오기
             }
         }
 
         // 3. 등록할 회차 입력받기(사용자)
-        Scanner sc = new Scanner(System.in);
         System.out.print("등록할 회차를 입력하시오 (1~10) : ");
-        int inputRound = sc.nextInt();
+        int inputRound = CampManagementApp.sc.nextInt();
         if (inputRound < 1 || inputRound > 10) {
             System.out.println("1~10 사이로 입력하세요.");
             return;
@@ -166,7 +158,7 @@ public class ManagementScore {
 
             // 4 - 1 과목별로 점수 입력받기(사용자) , 과목별로 담을 변수를 담기
             System.out.print(sub + "의 점수를 입력하시오 (1~100) :");
-            int score = sc.nextInt();
+            int score = CampManagementApp.sc.nextInt();
             if (score < 1 || score > 100) {
                 System.out.println("1~100 사이로 입력하세요.");
                 return;
@@ -175,7 +167,7 @@ public class ManagementScore {
             // 4 - 2 입력받은 점수가 어느 등급인지 계산
             String subjectType = "";
             String subjectId = "";
-            for (Subject subject : subjects) {
+            for (Subject subject : CampManagementApp.subjectStore) {
                 if (subject.getSubjectName().equals(sub)) {
                     subjectType = subject.getSubjectType();
                     subjectId = subject.getSubjectId();
@@ -186,7 +178,7 @@ public class ManagementScore {
             // 4 - 3 입력받은 값으로 score인스턴스에 생성하기
             String scoreId = CampManagementApp.sequence(CampManagementApp.INDEX_TYPE_SCORE);
             Score setScore = new Score(scoreId, studentId, subjectId, inputRound, score, grade);
-            scores.add(setScore);
+            CampManagementApp.scoreStore.add(setScore);
         }
         System.out.println("\n점수 등록 성공!");
     }
@@ -216,8 +208,7 @@ public class ManagementScore {
             while (true) {
                 try {
                     System.out.println("회차입력");
-                    Scanner sc = new Scanner(System.in);
-                    round = sc.nextInt();
+                    round = CampManagementApp.sc.nextInt();
                     break;
                 } catch (InputMismatchException e) {
                     System.out.println("정수를 입력해주세요");
@@ -227,12 +218,12 @@ public class ManagementScore {
 
             Score bigScore = null;
 
-            for (int i = 0; i < scores.size(); i++) {
-                if (scores.get(i).getStudentId().equals(studentId) && scores.get(i).getSubjectId().equals(subjectId) && scores.get(i).getRound() == round) {
+            for (int i = 0; i < CampManagementApp.scoreStore.size(); i++) {
+                if (CampManagementApp.scoreStore.get(i).getStudentId().equals(studentId) && CampManagementApp.scoreStore.get(i).getSubjectId().equals(subjectId) && CampManagementApp.scoreStore.get(i).getRound() == round) {
                     bigScore = getThatScore(studentId, subjectId, round);
                     break;
                 }
-                if (i + 1 == scores.size() && bigScore == null) {
+                if (i + 1 == CampManagementApp.scoreStore.size() && bigScore == null) {
                     System.out.println("해당 회차에 대한 정보가 없습니다.");
                 }
             }
@@ -246,8 +237,7 @@ public class ManagementScore {
             while (true) {
                 try {
                     System.out.println("몇 점으로 수정하시겠습니까? ");
-                    Scanner sc = new Scanner(System.in);
-                    newScore = sc.nextInt();
+                    newScore = CampManagementApp.sc.nextInt();
                     if (0 <= newScore && newScore <= 100) {
                         break;
                     } else {
@@ -263,8 +253,7 @@ public class ManagementScore {
             String type = "";
             while (true) {
                 System.out.print("과목의 타입을 입력하세요(MANDATORY or CHOICE) : ");
-                Scanner sc = new Scanner(System.in);
-                type = sc.next();
+                type = CampManagementApp.sc.next();
 
                 if (!checkType(subjectId, type)) {
                     System.out.println("과목의 타입을 제대로 입력하세요");
@@ -301,9 +290,8 @@ public class ManagementScore {
         }
 
         // 조회할 과목명 입력받기
-        Scanner sc = new Scanner(System.in);
         System.out.print("조회할 과목을 입력하시오 : ");
-        String subjectName = sc.next();
+        String subjectName = CampManagementApp.sc.next();
 
         // 입력받은 과목명이 수강생의 수강중인 과목에 포함되어있는지 체크
         boolean includeSubject = isSubjectList(studentId, subjectName);
@@ -343,7 +331,7 @@ public class ManagementScore {
         }
 
         // 과목별 평균 등급 조회
-        for (Subject subject : subjects) {
+        for (Subject subject : CampManagementApp.subjectStore) {
             int sumScore = 0, avgScore = 0, index = 0;
             for (Score score : getStudentScores(studentId)) {   // 해당 수강생의 점수목록을 전부 순회
                 if (score.getSubjectId().equals(subject.getSubjectId())) {
@@ -378,16 +366,16 @@ public class ManagementScore {
 
         int sum=0;
         int count=0;
-        for (Student student : students) {
+        for (Student student : CampManagementApp.studentStore) {
             if (student.getStudentStatus().equals(status)) {//특정 상태의 학생찾기
 
                 String studentId = student.getStudentId();//특정학생의 studentid 찾기
 
-                for (Score score : scores) {
+                for (Score score : CampManagementApp.scoreStore) {
                     if (score.getStudentId().equals(studentId)) { //해당 studentid에 해당하는 score찾기
                         String subjectId = score.getSubjectId();//score에 subjectid 찾기
 
-                        for (Subject subject : subjects) {
+                        for (Subject subject : CampManagementApp.subjectStore) {
                             if (subject.getSubjectId().equals(subjectId) &&
                                     subject.getSubjectType().equals("MANDATORY")) { // 과목이 필수과목인지 찾기
                                 sum += score.getScore();//필수과목이면 점수값들 더해주기
