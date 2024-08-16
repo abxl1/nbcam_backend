@@ -9,19 +9,23 @@ public class ScheduleResponseDto {
     private Long id;
     private String schedule;
     private String username;
-    private String date;
-    
+    private String created_at;
+    private String updated_at;
+
     public ScheduleResponseDto(Schedule schedule) {
         this.id = schedule.getId();
         this.schedule = schedule.getSchedule();
         this.username = schedule.getUsername();
-        this.date = schedule.getDate();
+        this.created_at = schedule.getCreated_at();
+        this.updated_at = schedule.getUpdated_at();
     }
 
-    public ScheduleResponseDto(Long id, String username, String schedule, String date) {
+    public ScheduleResponseDto(Long id, String username, String schedule, String created_at, String updated_at) {
         this.id = id;
         this.username = username;
         this.schedule = schedule;
-        this.date = date;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
     }
+
 }

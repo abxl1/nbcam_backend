@@ -26,7 +26,7 @@ public class ScheduleRepository {
         // DB 저장
         KeyHolder keyHolder = new GeneratedKeyHolder(); // 기본 키를 반환받기 위한 객체
 
-        String sql = "INSERT INTO schedule (schedule, username, password, date) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO schedule (schedule, username, password, created_at, updated_at) VALUES (?, ?, ?, ?, ?)";
         jdbcTemplate.update(con -> {
                     PreparedStatement preparedStatement = con.prepareStatement(sql,
                             Statement.RETURN_GENERATED_KEYS);
@@ -34,7 +34,8 @@ public class ScheduleRepository {
                     preparedStatement.setString(1, schedule.getSchedule());
                     preparedStatement.setString(2, schedule.getUsername());
                     preparedStatement.setString(3, schedule.getPassword());
-                    preparedStatement.setString(4, schedule.getDate());
+                    preparedStatement.setString(4, schedule.getCreated_at());
+                    preparedStatement.setString(5, schedule.getUpdated_at());
 
                     return preparedStatement;
                 },
@@ -59,10 +60,29 @@ public class ScheduleRepository {
                 Long id = rs.getLong("id");
                 String username = rs.getString("username");
                 String schedule = rs.getString("schedule");
-                String date = rs.getString("date");
-                return new ScheduleResponseDto(id, username, schedule, date);
+                String created_at = rs.getString("created_at");
+                String updated_at = rs.getString("updated_at");
+                return new ScheduleResponseDto(id, username, schedule, created_at, updated_at);
             }
         });
+    }
+
+    public void update(Long id, ScheduleRequestDto requestDto) {
+        String sql = "UPDATE schedule " +
+                "SET username = ?, schedule = ?, updated_at = ? " +
+                "WHERE id = ?";
+        jdbcTemplate.update(
+                sql,
+                requestDto.getSchedule(),
+                requestDto.getUsername(),
+                requestDto.getUpdated_at(),
+                id
+        );
+    }
+
+    public void delete(Long id) {
+        String sql = "DELETE FROM schedule WHERE id = ?";
+        jdbcTemplate.update(sql, id);
     }
 
     public Schedule findById(Long id) {
@@ -74,21 +94,12 @@ public class ScheduleRepository {
                 Schedule schedule = new Schedule();
                 schedule.setSchedule(resultSet.getString("schedule"));
                 schedule.setUsername(resultSet.getString("username"));
-                schedule.setDate(resultSet.getString("date"));
+                schedule.setCreated_at(resultSet.getString("created_at"));
+                schedule.setUpdated_at(resultSet.getString("updated_at"));
                 return schedule;
             } else {
                 return null;
             }
         }, id);
-    }
-
-    public void update(Long id, ScheduleRequestDto requestDto) {
-        String sql = "UPDATE schedule SET username = ?, schedule = ? , date = ? WHERE id = ?";
-        jdbcTemplate.update(sql, requestDto.getSchedule(), requestDto.getUsername(), requestDto.getDate(), id);
-    }
-
-    public void delete(Long id) {
-        String sql = "DELETE FROM schedule WHERE id = ?";
-        jdbcTemplate.update(sql, id);
     }
 }

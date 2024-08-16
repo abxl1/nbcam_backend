@@ -41,10 +41,10 @@ public class ScheduleService {
     public Long updateSchedule(Long id, ScheduleRequestDto requestDto) {
 
         ScheduleRepository scheduleRepository = new ScheduleRepository(jdbcTemplate);
-        // 해당 메모가 DB에 존재하는지 확인
+        // 해당 일정이 DB에 존재하는지 확인
         Schedule schedule = scheduleRepository.findById(id);
         if (schedule != null) {
-            // memo 내용 수정
+            // 일정 내용 수정
             scheduleRepository.update(id, requestDto);
 
             return id;

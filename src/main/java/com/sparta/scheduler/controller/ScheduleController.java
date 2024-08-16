@@ -30,13 +30,13 @@ public class ScheduleController {
         return scheduleService.getSchedules();
     }
 
-    @PutMapping("/schedule/{scheduleId}")
+    @PutMapping("/schedule/{id}")
     public Long updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
         ScheduleService scheduleService = new ScheduleService(jdbcTemplate);
         return scheduleService.updateSchedule(id, requestDto);
     }
 
-    @DeleteMapping("/schedule/{scheduleId}")
+    @DeleteMapping("/schedule/{id}")
     public Long deleteSchedule(@PathVariable Long id) {
         ScheduleService scheduleService = new ScheduleService(jdbcTemplate);
         return scheduleService.deleteSchedule(id);

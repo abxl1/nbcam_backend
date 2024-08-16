@@ -14,18 +14,15 @@ public class Schedule {
     private String username; // 스케쥴 작성자
     private String schedule; // 스케쥴 내용
     private String password; // 스케쥴 비밀번호
-    private String date; // 스케쥴 작성일(수정일)
+    private String created_at; // 스케쥴 작성일
+    private String updated_at; // 스케쥴 수정일
 
     public Schedule(ScheduleRequestDto requestDto) {
+        this.id = requestDto.getId();
         this.username = requestDto.getUsername();
         this.schedule = requestDto.getSchedule();
         this.password = requestDto.getPassword();
-        this.date = requestDto.getDate();
-    }
-
-    public void update(ScheduleRequestDto requestDto) {
-        this.username = requestDto.getUsername();
-        this.schedule = requestDto.getSchedule();
-        this.date = requestDto.getDate();
+        this.created_at = requestDto.getCreated_at();
+        this.updated_at = requestDto.getUpdated_at();
     }
 }
