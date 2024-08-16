@@ -6,4 +6,4 @@
 
 #### Spring 입문 - MemoList
 
-#### Spring 개인 과제 - Scheduler
+#### Spring 개인 과제 - Scheduler_DBMS
